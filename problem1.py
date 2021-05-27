@@ -1,4 +1,4 @@
-def find_35sum(n):
+def find_35sum(n: int) -> int:
     n3 = n // 3
     n5 = n // 5
     n15 = n // 15
@@ -9,4 +9,6 @@ def find_35sum(n):
     if n15*15 == n:
         n15 -= 1
     s = 0.5*(3*n3*(n3+1)+5*n5*(n5+1)-15*n15*(n15+1))
-    return s
+    return int(s)
+
+print(find_35sum(1000))
