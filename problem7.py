@@ -1,6 +1,7 @@
 import numpy as np
 
 def prime_sieve_nth(n):
+    # m is the upper bound for the n-th prime
     m = int(n*(np.log(n)+np.log(np.log(n))))
     numbers = np.arange(m+1)
     numidx = np.ones(m+1, dtype=bool)
