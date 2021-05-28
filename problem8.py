@@ -7,7 +7,7 @@ def find13_largest_product(digits: str) -> int:
         numbers = digit1000[j:j+13]
         if "0" in numbers:
             continue
-        p = np.prod([int(x) for x in numbers])
+        p = np.prod([int(x) for x in numbers], dtype=np.int64)
         if p >= product:
             product = p
     return product
