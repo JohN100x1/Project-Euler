@@ -1,6 +1,6 @@
 import numpy as np
 
-numbers = np.loadtxt("problem13_numbers.txt")
+numbers = np.loadtxt("problem013_numbers.txt")
 
 def first_ten_digits():
     ftd = np.sum(numbers)

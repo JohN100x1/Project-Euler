@@ -1,4 +1,4 @@
-with open("problem22_names.txt") as f:
+with open("problem022_names.txt") as f:
     NAMES = f.read().replace("\"","").split(",")
 
 def name_score(pos, name):

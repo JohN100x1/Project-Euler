@@ -1,6 +1,6 @@
 import numpy as np
 
-grid = np.loadtxt("problem11_grid.txt")
+grid = np.loadtxt("problem011_grid.txt")
 
 def find_largest_4prod():
     product = 1
