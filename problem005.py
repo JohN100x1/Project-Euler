@@ -7,7 +7,7 @@ def gcd(a, b):
 def smallest_lcm(n):
     lcm = 1
     for i in range(1,n+1):
-        lcm = lcm*i//gcd(lcm, i)
+        lcm *= i//gcd(lcm, i)
     return lcm
 
 print(smallest_lcm(20))

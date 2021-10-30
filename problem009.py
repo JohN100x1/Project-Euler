@@ -1,10 +1,11 @@
-def find_special_pytriple():
-    abc = None
-    for a in range(1,501):
-        if (500000 - 1000*a) % (1000 - a) == 0:
-            b = (500000 - 1000*a) // (1000 - a)
-            abc = a*b*(1000 - a - b)
-            break
-    return abc
+def get_pytriple_prod(n):
+    assert(n % 2 == 0)
+    for a in range(1,n//2+1):
+        numer = (n**2//2 - n*a)
+        denom = (n - a)
+        if numer % denom == 0:
+            b = numer // denom
+            abc = a*b*(n - a - b)
+            return abc
 
-print(find_special_pytriple())
+print(get_pytriple_prod(1000))
