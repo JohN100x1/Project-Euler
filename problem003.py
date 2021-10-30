@@ -1,5 +1,5 @@
 def get_primes(n):
-    """ Returns  a list of primes < n """
+    """ Returns a list of primes < n """
     sieve = [True] * n
     for i in range(3,int(n**0.5)+1,2):
         if sieve[i]:

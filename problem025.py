@@ -1,4 +1,4 @@
-def nth_fibonacci_digits(d):
+def get_nth_fibonacci_digits(d):
     if d == 1:
         return 1
     Fm = 1
@@ -9,4 +9,4 @@ def nth_fibonacci_digits(d):
         n += 1
     return n
     
-print(nth_fibonacci_digits(1000))
+print(get_nth_fibonacci_digits(1000))

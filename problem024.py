@@ -1,16 +1,11 @@
-def sort_perm(x: str) -> list:
-    if len(x) == 2:
-        # Two-digit case
-        if x[0] > x[1]:
-            return [x[::-1], x]
-        else:
-            return [x, x[::-1]]
-    else:
-        digits = sorted(x)
-        l = []
-        for d in digits:
-            other_digits = "".join([x for x in digits if x != d])
-            l += [d+y for y in sort_perm(other_digits)]
-        return l
+from math import factorial
 
-print(sort_perm("0123456789")[999999])
+def get_nth_lexicographic_perm(dlist, n):
+    perm = 0
+    r = n - 1
+    for i in range(len(dlist)-1, -1, -1):
+        q, r = r // factorial(i), r % factorial(i)
+        perm += pow(10, len(dlist)-1)*dlist.pop(q)
+    return perm
+
+print(get_nth_lexicographic_perm([0,1,2,3,4,5,6,7,8,9], 1000000))

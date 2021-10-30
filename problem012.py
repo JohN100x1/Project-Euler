@@ -1,23 +1,42 @@
-def triangle_number(n: int) -> int:
-    Tn = 0.5*n*(n+1)
-    return int(Tn)
+def get_primes(n):
+    """ Returns a list of primes < n """
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return [2] + [i for i in range(3,n,2) if sieve[i]]
 
-def get_num_divisors(num: int) -> int:
-    if num == 1:
+PRIMES = get_primes(10000)
+
+def get_num_divisors(n: int) -> int:
+    if n == 1:
         return 1
     else:
-        num_divisors = 2
-        for i in range(2,int(num**0.5)+1):
-            if num % i == 0:
-                num_divisors += 2
-        return num_divisors
+        dnum = 1
+        sqrtn = int(n**0.5)+1
+        for p in PRIMES:
+            if p < sqrtn:
+                power = 1
+                while n % p == 0:
+                    n //= p
+                    power += 1
+                dnum *= power
+            else:
+                break
+        return dnum
 
-def high_divisible_Tn(m: int, maxn: int) -> int:
-    for n in range(1, maxn+1):
-        Tn = triangle_number(n)
-        num_divisors = get_num_divisors(Tn)
-        if num_divisors > m:
-            break
-    return int(Tn)
+def get_high_divisible_Tn(m: int) -> int:
+    n = 0
+    dnum = 0
+    while dnum <= m:
+        n += 1
+        if n % 2 == 0:
+            dnum1 = get_num_divisors(n//2)
+            dnum2 = get_num_divisors(n+1)
+        else:
+            dnum1 = get_num_divisors(n)
+            dnum2 = get_num_divisors((n+1)//2)
+        dnum = dnum1 * dnum2
+    return n*(n+1)//2
 
-print(high_divisible_Tn(500, 99999))
+print(get_high_divisible_Tn(500))

@@ -12,10 +12,10 @@ def get_chain_len(n, chain_len):
         chain_len[n] = cl
         return cl
 
-def longest_collatz_seq(N):
+def get_longest_collatz_seq(N):
     chain_len = {1:1}
-    for n in range(2,N):
+    for n in range(2, N):
         chain_len[n] = get_chain_len(n, chain_len)
     return max(chain_len, key=chain_len.get)
 
-print(longest_collatz_seq(1000000))
+print(get_longest_collatz_seq(1000000))

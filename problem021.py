@@ -1,25 +1,17 @@
-import numpy as np
-
 def get_primes(n):
-    numbers = np.arange(n+1, dtype=np.int64)
-    is_prime = np.ones(n+1, dtype=bool)
-    is_prime[0] = False
-    is_prime[1] = False
-    for i in range(2, n+1):
-        if is_prime[i]:
-            for j in range(2,(n+1)//i+1):
-                if j*i <= n:
-                    is_prime[j*i] = False
-        else:
-            continue
-    return numbers[is_prime]
+    """ Returns a list of primes < n """
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return [2] + [i for i in range(3,n,2) if sieve[i]]
 
 PRIMES = get_primes(10000)
 
 def get_prime_factorisation(n):
     if n <= 1:
         return {}
-    x = 1*n
+    x = n
     products = {}
     for p in PRIMES:
         while x % p == 0:
@@ -37,14 +29,12 @@ def proper_factor_sum(n):
         return 0
     factor_sum = 1
     prime_factors = get_prime_factorisation(n)
-    primes = prime_factors.keys()
-    for p in primes:
-        m = prime_factors[p]
-        factor_sum *= (p**(m+1)-1)/(p-1)
+    for p, exp in prime_factors.items():
+        factor_sum *= (p**(exp+1)-1)//(p-1)
     factor_sum -= n
-    return int(factor_sum)
+    return factor_sum
 
-def find_amicable_sum(n):
+def get_amicable_sum(n):
     checked = set()
     amicable_sum = 0
     for a in range(1,n):
@@ -55,11 +45,8 @@ def find_amicable_sum(n):
         b = proper_factor_sum(a)
         if proper_factor_sum(b) == a and a != b:
             amicable_sum += a + b
-            checked.add(a)
-            checked.add(b)
-        else:
-            checked.add(a)
-            checked.add(b)
+        checked.add(a)
+        checked.add(b)
     return amicable_sum
 
-print(find_amicable_sum(10000))
+print(get_amicable_sum(10000))

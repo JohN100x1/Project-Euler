@@ -1,9 +1,13 @@
-from scipy.special import binom
+import operator as op
+from functools import reduce
+
+def ncr(n, r):
+    r = min(r, n-r)
+    numer = reduce(op.mul, range(n, n-r, -1), 1)
+    denom = reduce(op.mul, range(1, r+1), 1)
+    return numer // denom
 
 def get_lattice_paths(n: int) -> int:
-    num_paths = 0
-    for j in range(n+1):
-        num_paths += binom(n,j)**2
-    return int(num_paths)
+    return ncr(2*n, n)
 
 print(get_lattice_paths(20))

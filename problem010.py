@@ -1,17 +1,8 @@
-import numpy as np
+def get_prime_sum(n):
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return 2 + sum(i for i in range(3,n,2) if sieve[i])
 
-def prime_sum(n: int) -> int:
-    numbers = np.arange(n+1, dtype=np.int64)
-    is_prime = np.ones(n+1, dtype=bool)
-    is_prime[0] = False
-    is_prime[1] = False
-    for i in range(2, n+1):
-        if is_prime[i]:
-            for j in range(2,(n+1)//i+1):
-                if j*i <= n:
-                    is_prime[j*i] = False
-        else:
-            continue
-    return np.sum(numbers[is_prime])
-
-print(prime_sum(2000000))
+print(get_prime_sum(2000000))
