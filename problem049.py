@@ -10,15 +10,14 @@ PRIMES = get_primes(10000)
 PRIMES = [p for p in PRIMES if p > 999]
 PRIMES = [p for p in PRIMES if "0" not in str(p)]
 
-def find_arth_prime_perms():
+def get_arth_prime_perms():
     checked = {1487}
     concatenated = ""
     for i, p in enumerate(PRIMES):
         # Skipped checked primes
         if p in checked:
             continue
-        else:
-            checked.add(p)
+        checked.add(p)
         # Get prime permutations
         perms = []
         for p2 in PRIMES[i+1:]:
@@ -35,4 +34,4 @@ def find_arth_prime_perms():
             break
     return int(concatenated)
 
-print(find_arth_prime_perms())
+print(get_arth_prime_perms())
