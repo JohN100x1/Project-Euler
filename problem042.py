@@ -1,7 +1,7 @@
-with open("problem042_words.txt") as f:
+with open("p042_words.txt") as f:
     WORDS = f.read().replace("\"","").split(",")
     
-def count_triangle_words():
+def get_triangle_word_count():
     count = 0
     for word in WORDS:
         t = sum(ord(L)-64 for L in word)
@@ -9,5 +9,5 @@ def count_triangle_words():
         if int(n) == n:
             count += 1
     return count
-            
-print(count_triangle_words())
+
+print(get_triangle_word_count())

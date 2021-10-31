@@ -14,38 +14,30 @@ def is_prime(n: int) -> bool:
 def perm_last(dlist, k):
     # return highest in order
     if k == 1 or len(dlist) == 1:
-        return dlist
-    elif k == 2:
-        if dlist[-1] < dlist[-2]:
-            new_dlist2 = dlist.copy()
-            new_dlist2[-1], new_dlist2[-2] = new_dlist2[-2], new_dlist2[-1]
-            return dlist, new_dlist2
-        else:
-            new_dlist1 = dlist.copy()
-            new_dlist1[-1], new_dlist1[-2] = new_dlist1[-2], new_dlist1[-1]
-            return new_dlist1, dlist
+        return [dlist]
     else:
-        new_dlists = []
+        perms = []
         for d in sorted(dlist[-k:])[::-1]:
-            fixed_dlist = dlist.copy()
-            fixed_dlist.remove(d)
-            fixed_dlist.insert(1-k,d)
-            for new_dlist in perm_last(fixed_dlist, k-1):
-                new_dlists.append(new_dlist)
-        return new_dlists
+            dlist2 = dlist.copy()
+            dlist2.remove(d)
+            dlist2.insert(1-k, d)
+            for perm in perm_last(dlist2, k-1):
+                perms.append(perm)
+        return perms
 
-def find_largest_pandigital_prime():
-    is_p = False
-    for k in range(9, 0, -1):
+def get_max_pandigital_prime():
+    # 1-8 and 1-9 pandigitals are not prime
+    # because the sum of their digits are divisible by 3
+    for k in range(7, 0, -1):
         dlist = list(range(k,0,-1))
         perms = perm_last(dlist, k)
         for perm in perms:
-            p = int("".join(str(d) for d in perm))
+            p = sum(d*10**i for i, d in enumerate(perm[::-1]))
             if is_prime(p):
-                is_p = True
                 break
-        if is_p == True:
-            break
+        else:
+            continue
+        break
     return p
 
-print(find_largest_pandigital_prime())
+print(get_max_pandigital_prime())

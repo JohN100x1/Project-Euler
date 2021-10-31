@@ -1,10 +1,10 @@
-def find_TPH(N):
-    c = None
-    for a in range(144, N):
-        b = (1+(1+24*a*(2*a-1))**0.5)/6
-        if int(b) == b:
-            c = 2*a - 1
-            Tc = c*(c+1)//2
+def get_next_TPH(n=143):
+    # n is the n-th Hexagonal term
+    a = n + 1
+    while (1+24*a*(2*a-1))**0.5 % 6 != 5:
+        a += 1
+    c = 2*a-1
+    Tc = c*(c+1)//2
     return Tc
 
-print(find_TPH(100000))
+print(get_next_TPH())

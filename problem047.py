@@ -1,5 +1,4 @@
-def find_4_consecutive_distinct_prime_factors(N):
-    answer = None
+def get_4_consecutive_distinct_prime_factors(N=200000):
     counter = 0
     num_factors = [0 for i in range(N)]
     for n in range(2, N):
@@ -12,11 +11,10 @@ def find_4_consecutive_distinct_prime_factors(N):
         elif num_factors[n] == 4:
             counter += 1
             if counter == 4:
-                answer = n - 3
-                break
+                return n - 3
         # Composite with Distinct factors != 4
         else:
             counter = 0
-    return answer
+    return None
 
-print(find_4_consecutive_distinct_prime_factors(200000))
+print(get_4_consecutive_distinct_prime_factors())

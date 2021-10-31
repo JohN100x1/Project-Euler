@@ -1,15 +1,5 @@
-import numpy as np
-
-def get_num_str(x, d):
-    n = str(x)
-    if len(n) == d:
-        return n
-    else:
-        n = "0"*(d-len(n))+n
-        return n
-
-def get_nums(d: int) -> str:
-    nums = list(get_num_str(x, d) for x in range(10**d) if x % 10 != 0)
+def get_palindrome_halfs(d: int) -> str:
+    nums = [str(x) for x in range(10**(d-1), 10**d)]
     return nums
 
 def get_palindromes(N):
@@ -18,15 +8,14 @@ def get_palindromes(N):
     for d in range(2, len(str(N))+1):
         # if d is even
         if d % 2 == 0:
-            nums = get_nums(d//2)
-            palindromes += [int(n[::-1]+n) for n in nums]
+            halfs = get_palindrome_halfs(d//2)
+            palindromes += [int(n+n[::-1]) for n in halfs]
         # If d is odd
         else:
-            nums = get_nums((d-1)//2)
+            halfs = get_palindrome_halfs((d-1)//2)
             for i in range(10):
-                palindromes += [int(n[::-1]+str(i)+n) for n in nums]
-    palindromes = np.array(palindromes, dtype="int64")
-    palindromes = palindromes[palindromes < N]
+                palindromes += [int(n+str(i)+n[::-1]) for n in halfs]
+    palindromes = [p for p in palindromes if p < N]
     return palindromes
 
 def get_double_palindrome_sum(N):
@@ -35,16 +24,9 @@ def get_double_palindrome_sum(N):
     psum = 0
     for p in palindromes:
         # Get Binary form of palindrome
-        digits = []
-        n = p
-        if n == 0:
-            digits.append(0)
-        while n != 0:
-            digits.append(n % 2)
-            n //= 2
+        binary = bin(p)[2:]
         # Check if bindary number is palindrome
-        p_binary = "".join(str(d) for d in digits)
-        if p_binary == p_binary[::-1]:
+        if binary == binary[::-1]:
             psum += p
     return psum
 

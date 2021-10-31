@@ -1,38 +1,28 @@
-import numpy as np
-
 def get_primes(n):
-    numbers = np.arange(n+1, dtype=np.int64)
-    is_prime = np.ones(n+1, dtype=bool)
-    is_prime[0] = False
-    is_prime[1] = False
-    for i in range(2, n+1):
-        if is_prime[i]:
-            for j in range(2,(n+1)//i+1):
-                if j*i <= n:
-                    is_prime[j*i] = False
-        else:
-            continue
-    return numbers[is_prime]
+    """ Returns a list of primes < n """
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return [2] + [i for i in range(3,n,2) if sieve[i]]
 
 PRIMES = get_primes(10000)
+PRIME_SET = set(PRIMES)
+ODD_PRIMES = PRIMES[1:]
 
-def twice_sq(N):
-    return [2*n**2 for n in range(1, N+1)]
-
-def odd_nums():
-    n = len(PRIMES[PRIMES > 2])
+def get_goldbach_counter_example():
     ptsqsums = set()
-    t_sq = twice_sq(n)
     # Get prime + twice square set
-    for i, p in enumerate(PRIMES[PRIMES > 2]):
-        for j, tsq in enumerate(t_sq):
-            ptsqsums.add(p + tsq)
-    smallest_composite = None
+    for p in ODD_PRIMES:
+        q = 1
+        tsq = p + 2*q**2
+        while tsq < PRIMES[-1]:
+            ptsqsums.add(tsq)
+            q += 1
+            tsq = p + 2*q**2
     # Check if odd composite is in set
     for odd in range(9, PRIMES[-1], 2):
-        if odd not in PRIMES and odd not in ptsqsums:
-            smallest_composite = odd
-            break
-    return smallest_composite
+        if odd not in PRIME_SET and odd not in ptsqsums:
+            return odd
 
-print(odd_nums())
+print(get_goldbach_counter_example())

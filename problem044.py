@@ -1,11 +1,6 @@
-def is_pentagonal(P):
-    n = (1+(1+24*P)**0.5)/6
-    if int(n) == n:
-        return True
-    else:
-        return False
-
-def find_min_pentagonal_diff(N):
+def get_min_pentagonal_diff(N=3000):
+    # https://www.desmos.com/calculator/q44wzac3qg
+    # Generate Pentagonal numbers
     Pnums = {n*(3*n-1)//2 for n in range(1,int(1.5*N))}
     D = float("inf")
     for i in range(1, N+1):
@@ -19,4 +14,4 @@ def find_min_pentagonal_diff(N):
                     D = Psub
     return D
 
-print(find_min_pentagonal_diff(3000))
+print(get_min_pentagonal_diff())

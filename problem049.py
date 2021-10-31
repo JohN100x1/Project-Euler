@@ -1,21 +1,13 @@
-import numpy as np
-
 def get_primes(n):
-    numbers = np.arange(n+1, dtype=np.int64)
-    is_prime = np.ones(n+1, dtype=bool)
-    is_prime[0] = False
-    is_prime[1] = False
-    for i in range(2, n+1):
-        if is_prime[i]:
-            for j in range(2,(n+1)//i+1):
-                if j*i <= n:
-                    is_prime[j*i] = False
-        else:
-            continue
-    return numbers[is_prime]
+    """ Returns a list of primes < n """
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return [2] + [i for i in range(3,n,2) if sieve[i]]
 
 PRIMES = get_primes(10000)
-PRIMES = PRIMES[PRIMES > 999]
+PRIMES = [p for p in PRIMES if p > 999]
 PRIMES = [p for p in PRIMES if "0" not in str(p)]
 
 def find_arth_prime_perms():
