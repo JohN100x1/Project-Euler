@@ -1,79 +1,64 @@
-import numpy as np
-
 def get_primes(n):
-    numbers = np.arange(n+1, dtype=np.int64)
-    is_prime = np.ones(n+1, dtype=bool)
-    is_prime[0] = False
-    is_prime[1] = False
-    for i in range(2, n+1):
-        if is_prime[i]:
-            for j in range(2,(n+1)//i+1):
-                if j*i <= n:
-                    is_prime[j*i] = False
-        else:
-            continue
-    return numbers[is_prime]
+    """ Returns a list of primes < n """
+    sieve = [True] * n
+    for i in range(3,int(n**0.5)+1,2):
+        if sieve[i]:
+            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
+    return [2] + [i for i in range(3,n,2) if sieve[i]]
 
 PRIMES = get_primes(1000000)
+PRIME_SET = set(PRIMES)
 
-def search_n_len_prime_family(n, max_digits=6):
-    digits = 0
-    while digits < max_digits:
-        digits += 1
-        lbound = 10**(digits-1)
-        ubound = 10**digits
-        primes = PRIMES[PRIMES <= ubound]
-        primes = primes[primes >= lbound]
-        dlists = get_dlist_combinations(digits)[1:]
-        npv_families = []
-        for dlist in dlists:
-            prime_families = get_prime_digit_families(primes, dlist)
-            for family in prime_families.values():
-                if len(family) == n:
-                    npv_families.append(family)
-        if len(npv_families) > 0:
-            return min(min(family) for family in npv_families)
-    return None
+def get_perms(L, r):
+    if len(L) == 1 or len(L) == r:
+        return [L]
+    else:
+        perms = []
+        hashes = set()
+        for i in range(len(L)):
+            l = L[:i] + L[i+1:]
+            for perm in get_perms(l, r):
+                h = hash(tuple(perm))
+                if h not in hashes:
+                    hashes.add(h)
+                    perms.append(perm)
+        return perms
 
-def get_dlist_combinations(size):
-    nums = list(range(size))
-    dlists = []
-    for mask in range(1<<size):
-        dlist = []
-        for pos in range(size):
-            if (mask & (1<<pos)):
-                dlist.append(nums[pos])
-        dlists.append(dlist)
-    return dlists
-
-def get_prime_digit_families(primes, dlist):
-    checked = set()
-    prime_families = {}
-    for p in primes:
-        if p not in checked:
-            checked.add(p)
-            p_string = get_p_string(p, dlist)
-            if p_string == "INVALID":
-                pass
-            elif p_string in prime_families:
-                prime_families[p_string].add(p)
+def get_8_prime_family():
+    # For an 8 prime value family,
+    # 3 digits must be the same
+    # Last digit cannot be changed
+    
+    # Get primes with a least 3 repeated digits
+    # Get the repeated and remaining digit indexes
+    # NOTE: since PRIMES < 10^6, there's only 1 rdigit
+    repeated = {}
+    for p in PRIMES:
+        rdigit = None
+        pstring = str(p)[::-1]
+        dlists = {}
+        for i, d in enumerate(map(int, pstring)):
+            if d not in dlists:
+                dlists[d] = [i]
             else:
-                prime_families[p_string] = {p}
-    return prime_families
+                dlists[d].append(i)
+                # Record indices of 3 digit repeats
+                if len(dlists[d]) == 3:
+                    rdigit = d
+        if rdigit is not None:
+            repeated[p] = dlists.pop(rdigit)
+    # Pick 3 digit positions from repeated digits
+    for p, idxs in repeated.items():
+        for perm in get_perms(idxs, 3):
+            family = {p}
+            sub = sum(p % pow(10,i+1) - p %pow(10,i) for i in perm)
+            base = p - sub
+            increment = sum(1 * pow(10, i) for i in perm)
+            for d in range(int(len(str(base)) < len(str(p))), 10):
+                q = base + d*increment
+                if q in PRIME_SET:
+                    family.add(q)
+            if len(family) == 8:
+                return min(family)
 
-def get_p_string(p, dlist):
-    s = ""
-    p = str(p)
-    match = set()
-    for i in range(len(p)):
-        if i in dlist:
-            s += p[i]
-        else:
-            if p[i] not in match:
-                match.add(p[i])
-            s += "*"
-    if len(match) > 1:
-        return "INVALID"
-    return s
-
-print(search_n_len_prime_family(8))
+print(get_8_prime_family())

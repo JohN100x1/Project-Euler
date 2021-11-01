@@ -4,7 +4,7 @@ def split_lines(lines):
         num_list.append([int(n) for n in line.split(" ")])
     return num_list
 
-with open("problem067_numbers.txt","r") as f:
+with open("p067_numbers.txt","r") as f:
     paths = split_lines(f.read())
 
 def get_max_path():
