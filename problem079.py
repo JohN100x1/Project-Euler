@@ -34,3 +34,5 @@ def generate_shortest_passcodes(logins):
     for passcode in passcodes:
         if set(int(d) for d in str(passcode)) == dset:
             return passcode
+
+print(generate_shortest_passcodes(logins))
