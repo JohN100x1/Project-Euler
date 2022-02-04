@@ -1,5 +1,6 @@
-with open("p079_keylog.txt","r") as f:
+with open("../../res/p079_keylog.txt", "r") as f:
     logins = tuple(tuple(int(d) for d in n) for n in f.read().split("\n")[:-1])
+
 
 def dfs_traverse(passcodes, passcode, right_adj, d):
     if d not in right_adj:
@@ -7,17 +8,18 @@ def dfs_traverse(passcodes, passcode, right_adj, d):
         return
     else:
         for next_d in right_adj[d]:
-            dfs_traverse(passcodes, passcode*10+next_d, right_adj, next_d)
+            dfs_traverse(passcodes, passcode * 10 + next_d, right_adj, next_d)
+
 
 def generate_shortest_passcodes(logins):
     right_adj = {}
     # Initial right adjacent digits
     for n in logins:
-        for i in range(len(n)-1):
+        for i in range(len(n) - 1):
             if n[i] not in right_adj:
-                right_adj[n[i]] = {n[i+1]}
+                right_adj[n[i]] = {n[i + 1]}
             else:
-                right_adj[n[i]].add(n[i+1])
+                right_adj[n[i]].add(n[i + 1])
     # Remove non-adjacent digits
     for n in logins:
         if n[2] in right_adj[n[0]]:
@@ -34,5 +36,6 @@ def generate_shortest_passcodes(logins):
     for passcode in passcodes:
         if set(int(d) for d in str(passcode)) == dset:
             return passcode
+
 
 print(generate_shortest_passcodes(logins))
