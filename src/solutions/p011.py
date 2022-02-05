@@ -4,6 +4,7 @@ from config import path_res
 
 
 def get_largest_prod() -> int:
+    """Get the largest product of 4 numbers in line on the grid."""
 
     # Load from file
     grid = np.loadtxt(path_res / "p011_grid.txt", dtype=np.int64)
@@ -24,9 +25,9 @@ def get_largest_prod() -> int:
             p = np.prod(grid[i : i + 4, j])
             if p >= max_product:
                 max_product = p
-    dx = np.array([0, 1, 2, 3])
 
     # left diagonal product
+    dx = np.array([0, 1, 2, 3])
     for i in range(n - 4):
         for j in range(n - 4):
             p = np.prod(grid[i + dx, j + dx])
