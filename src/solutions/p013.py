@@ -1,10 +1,16 @@
 import numpy as np
 
-NUMBERS = np.loadtxt("p013_numbers.txt")
+from config import path_res
 
-def get_first_ten_digits():
-    ftd = np.sum(NUMBERS)
-    ftd = int(str(ftd).replace('.', '')[:10])
+
+def get_first_ten_digits() -> int:
+    """Get first ten digits of list of large numbers."""
+
+    numbers = np.loadtxt(path_res / "p013_numbers.txt")
+
+    ftd = np.sum(numbers)
+    ftd = int(str(ftd).replace(".", "")[:10])
     return ftd
+
 
 print(get_first_ten_digits())
