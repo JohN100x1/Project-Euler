@@ -1,13 +1,10 @@
-import operator as op
-from functools import reduce
+from math import comb
 
-def ncr(n, r):
-    r = min(r, n-r)
-    numer = reduce(op.mul, range(n, n-r, -1), 1)
-    denom = reduce(op.mul, range(1, r+1), 1)
-    return numer // denom
 
 def get_lattice_paths(n: int) -> int:
-    return ncr(2*n, n)
+    """Get all lattice paths on a nxn grid."""
+    return comb(2 * n, n)
 
-print(get_lattice_paths(20))
+
+if __name__ == "__main__":
+    print(get_lattice_paths(20))

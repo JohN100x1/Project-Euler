@@ -1,5 +1,4 @@
-def get_digit_sum(x):
-    digit_sum = sum(int(i) for i in str(x))
+def sum_digit(n: int) -> int:
+    """Get the digit sum of a positive integer n."""
+    digit_sum = sum(int(digit) for digit in str(n))
     return digit_sum
-
-print(get_digit_sum(2**1000))
