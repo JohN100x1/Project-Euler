@@ -1,20 +1,18 @@
-def split_lines(lines):
-    num_list = []
-    for line in lines.split("\n"):
-        num_list.append([int(n) for n in line.split(" ")])
-    return num_list
+from config import path_res
 
 
-with open("../../res/p018_numbers.txt", "r") as f:
-    PATHS = split_lines(f.read())
+def load_paths() -> list[list[int]]:
+    """Load a binomial tree path as a list of lists."""
+    with open(path_res / "p018_numbers.txt", "r") as f:
+        lines = f.read().split("\n")
+        paths = [[int(n) for n in line.split(" ")] for line in lines]
+    return paths
 
 
-def get_max_path():
-    n = len(PATHS)
-    for i in range(n - 2, -1, -1):
-        for j in range(len(PATHS[i])):
-            PATHS[i][j] += max(PATHS[i + 1][j], PATHS[i + 1][j + 1])
-    return PATHS[0][0]
-
-
-print(get_max_path())
+def get_max_path() -> int:
+    """Get the maximum path of a binomial tree."""
+    paths = load_paths()
+    for i in range(len(paths) - 2, -1, -1):
+        for j in range(len(paths[i])):
+            paths[i][j] += max(paths[i + 1][j], paths[i + 1][j + 1])
+    return paths[0][0]
