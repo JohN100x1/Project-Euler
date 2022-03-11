@@ -1,15 +1,10 @@
-def get_next_collatz(n: int) -> int:
-    """Get next number in Collatz sequence."""
-    if n % 2 == 0:
-        return n // 2
-    else:
-        return 3 * n + 1
-
-
 def get_chain_len(n: int, chain_len: dict) -> int:
     """Get chain length of n recursively."""
     if n not in chain_len:
-        chain_len[n] = 1 + get_chain_len(get_next_collatz(n), chain_len)
+        if n % 2 == 0:
+            chain_len[n] = 1 + get_chain_len(n // 2, chain_len)
+        else:
+            chain_len[n] = 2 + get_chain_len((3 * n + 1) // 2, chain_len)
     return chain_len[n]
 
 
