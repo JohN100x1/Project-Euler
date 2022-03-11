@@ -9,9 +9,8 @@ def load_paths() -> list[list[int]]:
     return paths
 
 
-def get_max_path() -> int:
+def get_max_path(paths: list[list[int]]) -> int:
     """Get the maximum path of a binomial tree."""
-    paths = load_paths()
     for i in range(len(paths) - 2, -1, -1):
         for j in range(len(paths[i])):
             paths[i][j] += max(paths[i + 1][j], paths[i + 1][j + 1])

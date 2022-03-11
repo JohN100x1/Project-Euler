@@ -1,5 +1,5 @@
 def get_prime_sum(n: int) -> int:
-    """Get sum of primes less than n"""
+    """Get sum of primes less than n."""
     sieve = [True] * n
     for i in range(3, int(n**0.5) + 1, 2):
         if sieve[i]:

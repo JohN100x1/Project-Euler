@@ -1,16 +1,11 @@
-def get_sunday_count(start_year: int, end_year: int) -> int:
-    """Get the number of sundays from star year to end year."""
-    non_leap = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    leap_year = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    days = 0
+from datetime import datetime
+
+
+def get_sunday_count(start_date: datetime, end_date: datetime) -> int:
+    """Get the number of sunday starting months from start date to end date."""
     sundays = 0
-    for year in range(start_year, end_year + 1):
-        if start_year % 4 == 0:
-            months = non_leap
-        else:
-            months = leap_year
-        for month in months:
-            days += month
-            if days % 7 == 0:
+    for year in range(start_date.year, end_date.year + 1):
+        for month in range(start_date.month, end_date.month + 1):
+            if datetime(year, month, 1).weekday() == 6:
                 sundays += 1
     return sundays

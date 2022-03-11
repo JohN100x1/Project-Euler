@@ -1,12 +1,14 @@
 from config import path_res
 
 
-def get_largest_product(d: int) -> int:
-    """Get the largest product of d adjacent digits in string"""
-
-    # Read from file
+def load_str_digits() -> str:
+    """Load a string of digits 0-9 from /res/p008_digits.txt."""
     with open(path_res / "p008_digits.txt") as f:
-        str_digits = f.read().replace("\n", "")
+        return f.read().replace("\n", "")
+
+
+def get_largest_product(d: int, str_digits: str) -> int:
+    """Get the largest product of d adjacent digits in string."""
 
     # Calculate largest product
     max_idx = len(str_digits) - (d - 1)

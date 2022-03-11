@@ -3,11 +3,13 @@ import numpy as np
 from config import path_res
 
 
-def get_largest_prod() -> int:
-    """Get the largest product of 4 numbers in line on the grid."""
+def load_grid() -> np.array:
+    """Load grid of integers from /res/p011_grid.txt"""
+    return np.loadtxt(path_res / "p011_grid.txt", dtype=np.int64)
 
-    # Load from file
-    grid = np.loadtxt(path_res / "p011_grid.txt", dtype=np.int64)
+
+def get_largest_prod(grid: np.array) -> int:
+    """Get the largest product of 4 numbers in line on the grid."""
 
     max_product = 1
     n = grid.shape[0]
