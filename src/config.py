@@ -11,3 +11,4 @@ path_tests = path_root / "tests"
 # Determine the number of primes used.
 # This will affect certain utility functions which use primes.
 PRIMES = get_primes(10**6)
+PRIME_SET = set(PRIMES)
