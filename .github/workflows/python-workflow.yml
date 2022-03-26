@@ -1,11 +1,37 @@
-name: Pytester
+name: Python Workflow
 
 on: push
 
 jobs:
-  test:
-    name: Test Python Repository
+  build:
+    name: Setup Python Poetry Project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: '1.1'
+
+  test:
+    name: Test Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run pytest
+        run: pytest
+
+  style:
+    name: Check code format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run black
+        run: black .
+      - name: Run isort
+        run: isort .
