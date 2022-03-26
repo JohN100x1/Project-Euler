@@ -1,4 +1,4 @@
-def get_cycle_len(d: int, max_iterations=1000) -> int:
+def get_cycle_len(d: int) -> int:
     """Get the decimal digit cycle length of 1/d."""
     # Dict {(div, remainder) : idx)} to keep track of cycle repeat.
     div_remainder = {}
