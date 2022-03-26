@@ -23,7 +23,7 @@ SUB20_LETTERS = {
 OVR20_LETTERS = {0: 0, 2: 6, 3: 6, 4: 5, 5: 5, 6: 5, 7: 7, 8: 6, 9: 6}
 
 
-def get_num_letters(n: int) -> int:
+def count_letters(n: int) -> int:
     """Get number of letters for word of number n."""
     hundreds = SUB20_LETTERS[n // 100] + 7
     if n < 100:
@@ -40,5 +40,8 @@ def get_num_letters(n: int) -> int:
 
 
 def sum_letters(max_n: int) -> int:
-    """Letter sum for words of numbers i, where 1 <= i <= n <= 1000."""
-    return sum(get_num_letters(n) for n in range(1, max_n + 1))
+    """
+    Get the total number of letters for all words of numbers n where
+    1 <= n <= max_n <= 1000.
+    """
+    return sum(count_letters(n) for n in range(1, max_n + 1))

@@ -1,6 +1,6 @@
 from math import comb
 
 
-def get_lattice_paths(n: int) -> int:
-    """Get all lattice paths on a nxn grid."""
+def count_lattice_paths(n: int) -> int:
+    """Get the number of lattice paths on a nxn grid."""
     return comb(2 * n, n)
