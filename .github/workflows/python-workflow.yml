@@ -1,0 +1,11 @@
+name: Pytester
+
+on: push
+
+jobs:
+  test:
+    name: Test Python Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
