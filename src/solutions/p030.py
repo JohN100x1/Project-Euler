@@ -1,13 +1,14 @@
-def get_5pow_digit_sum(x: int) -> int:
-    s = sum(int(d)**5 for d in str(x))
-    return s
+def sum_digits_fifth_power(n: int) -> int:
+    """Get the sum of the fifth power of the digits of n."""
+    return sum(int(d) ** 5 for d in str(n))
 
-def get_sum_digit_5pow(N: int) -> list:
-    nums = []
-    for x in range(2, N):
-        if get_5pow_digit_sum(x) == x:
-            nums.append(x)
-    return sum(nums)
 
-# max 6 digits because 7*9^5 has 6 digits
-print(get_sum_digit_5pow(1000000))
+def sum_all_digits_fifth_power() -> int:
+    """
+    Get the sum of all numbers that are equal to
+    the sum of their digit fifth powers.
+
+    max 6-digits because max value of 7-digit number
+    is 7*9^5 which has 6 digits
+    """
+    return sum(n for n in range(2, 10**6) if sum_digits_fifth_power(n) == n)
