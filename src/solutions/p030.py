@@ -1,6 +1,9 @@
+from config import DIGIT_FIFTH_POWER
+
+
 def sum_digits_fifth_power(n: int) -> int:
     """Get the sum of the fifth power of the digits of n."""
-    return sum(int(d) ** 5 for d in str(n))
+    return sum(DIGIT_FIFTH_POWER[d] for d in str(n))
 
 
 def sum_all_digits_fifth_power() -> int:

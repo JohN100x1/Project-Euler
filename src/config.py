@@ -1,3 +1,4 @@
+from math import factorial
 from pathlib import Path
 
 from utils.primes import get_primes
@@ -16,3 +17,9 @@ PRIME_SET = set(PRIMES)
 # A useful set of digits
 DIGITS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 NON_ZERO_DIGITS = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+# Digit factorials
+DIGIT_FACTORIALS = {str(i): factorial(i) for i in range(10)}
+
+# Fifth powers
+DIGIT_FIFTH_POWER = {str(i): i**5 for i in range(10)}
