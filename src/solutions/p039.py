@@ -1,15 +1,18 @@
-def get_most_sol_pytriple(N):
-    # https://www.desmos.com/calculator/atmk2vllqr
-    pmax = 0
+def get_perimeter_most_pytriple_sol(n: int) -> int:
+    """
+    Get the value of p <= n such that a + b + c = p and a^2 + b^2 = c^2
+    has the most pythagorean triples.
+
+    https://www.desmos.com/calculator/atmk2vllqr
+    """
+    max_p = 0
     max_sols = 0
-    for p in range(2, N+1):
+    for p in range(2, n + 1):
         sols = 0
-        for x in range(1, int(p*(1-0.5*2**0.5))+1):
-            if p*(p-2*x) % (2*(p-x)) == 0:
+        for x in range(1, int(p * (1 - 0.5 * 2**0.5)) + 1):
+            if p * (p - 2 * x) % (2 * (p - x)) == 0:
                 sols += 1
         if sols > max_sols:
-            pmax = p
+            max_p = p
             max_sols = sols
-    return pmax
-
-print(get_most_sol_pytriple(1000))
+    return max_p
