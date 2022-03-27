@@ -1,33 +1,29 @@
-def get_palindrome_halfs(d: int) -> str:
-    nums = [str(x) for x in range(10**(d-1), 10**d)]
-    return nums
+def get_palindrome_halves(d: int) -> list[str]:
+    """Get the halves of a palindrome with d digits rounded down."""
+    half_digit = d // 2
+    return [str(x) for x in range(10 ** (half_digit - 1), 10**half_digit)]
 
-def get_palindromes(N):
-    # Single digit palindromes
+
+def get_palindromes(n: int) -> list[int]:
+    """Get a list of palindromes less than n."""
     palindromes = [x for x in range(10)]
-    for d in range(2, len(str(N))+1):
-        # if d is even
+    for d in range(2, len(str(n)) + 1):
+        half = get_palindrome_halves(d)
         if d % 2 == 0:
-            halfs = get_palindrome_halfs(d//2)
-            palindromes += [int(n+n[::-1]) for n in halfs]
-        # If d is odd
+            palindromes.extend(int(n + n[::-1]) for n in half)
         else:
-            halfs = get_palindrome_halfs((d-1)//2)
             for i in range(10):
-                palindromes += [int(n+str(i)+n[::-1]) for n in halfs]
-    palindromes = [p for p in palindromes if p < N]
-    return palindromes
+                palindromes.extend(int(n + str(i) + n[::-1]) for n in half)
+    return [p for p in palindromes if p < n]
 
-def get_double_palindrome_sum(N):
-    # Get all Palindromes < N
-    palindromes = get_palindromes(N)
-    psum = 0
-    for p in palindromes:
-        # Get Binary form of palindrome
-        binary = bin(p)[2:]
-        # Check if bindary number is palindrome
-        if binary == binary[::-1]:
-            psum += p
-    return psum
 
-print(get_double_palindrome_sum(1000000))
+def is_binary_palindrome(n: int) -> bool:
+    """Returns True if n is a palindrome in base and False otherwise."""
+    binary = bin(n)[2:]
+    return binary == binary[::-1]
+
+
+def sum_double_base_palindromes(n: int) -> int:
+    """Get the sum of all numbers that are palindromes in base 2 and 10."""
+    palindromes = get_palindromes(n)
+    return sum(p for p in palindromes if is_binary_palindrome(p))
