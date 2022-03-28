@@ -1,17 +1,20 @@
-def get_min_pentagonal_diff(N=3000):
-    # https://www.desmos.com/calculator/q44wzac3qg
-    # Generate Pentagonal numbers
-    Pnums = {n*(3*n-1)//2 for n in range(1,int(1.5*N))}
-    D = float("inf")
-    for i in range(1, N+1):
-        Pi = i*(3*i-1)//2
-        for j in range(int((1+(72*i-47)**0.5)/6), i):
-            Pj = j*(3*j-1)//2
-            Psum = Pi + Pj
-            Psub = Pi - Pj
-            if Psum in Pnums and Psub in Pnums:
-                if Psub < D:
-                    D = Psub
-    return D
+def get_min_pentagonal_diff(n: int = 3000) -> int:
+    """
+    Gets the minimum difference between two pentagonal numbers Pi > Pj > 0
+    such that Pi - Pj and Pi + Pj are pentagonal where i <= n.
 
-print(get_min_pentagonal_diff())
+    https://www.desmos.com/calculator/q44wzac3qg
+    # TODO : proper solution requires checking Pi - Pj is minimal
+    """
+    pentagonals = [n * (3 * n - 1) // 2 for n in range(1, int(1.5 * n))]
+    set_pentagonals = set(pentagonals)
+    diff = float("inf")
+    for i, pi in enumerate(pentagonals, 1):
+        for j in range(int((1 + (72 * i - 47) ** 0.5) / 6), i):
+            pj = pentagonals[j - 1]
+            p_sum = pi + pj
+            p_sub = pi - pj
+            if p_sum in set_pentagonals and p_sub in set_pentagonals:
+                if p_sub < diff:
+                    diff = p_sub
+    return diff
