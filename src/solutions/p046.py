@@ -1,28 +1,26 @@
-def get_primes(n):
-    """ Returns a list of primes < n """
-    sieve = [True] * n
-    for i in range(3,int(n**0.5)+1,2):
-        if sieve[i]:
-            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
-    return [2] + [i for i in range(3,n,2) if sieve[i]]
+from utils.primes import get_primes
 
-PRIMES = get_primes(10000)
-PRIME_SET = set(PRIMES)
-ODD_PRIMES = PRIMES[1:]
 
-def get_goldbach_counter_example():
-    ptsqsums = set()
+def get_goldbach_counter_example(n: int = 10000) -> int:
+    """
+    Gets the smallest prime that can't be written as the sum of a prime
+    and twice a square where any prime less than n is considered.
+    """
+
+    primes = get_primes(n)
+    prime_set = set(primes)
+    odd_primes = primes[1:]
+
+    tsq_sums = set()
     # Get prime + twice square set
-    for p in ODD_PRIMES:
+    for p in odd_primes:
         q = 1
-        tsq = p + 2*q**2
-        while tsq < PRIMES[-1]:
-            ptsqsums.add(tsq)
+        tsq = p + 2 * q**2
+        while tsq < primes[-1]:
+            tsq_sums.add(tsq)
             q += 1
-            tsq = p + 2*q**2
+            tsq = p + 2 * q**2
     # Check if odd composite is in set
-    for odd in range(9, PRIMES[-1], 2):
-        if odd not in PRIME_SET and odd not in ptsqsums:
+    for odd in range(9, primes[-1], 2):
+        if odd not in prime_set and odd not in tsq_sums:
             return odd
-
-print(get_goldbach_counter_example())

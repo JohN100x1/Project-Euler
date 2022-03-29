@@ -1,8 +1,7 @@
-def get_self_pow_sum(d):
-    S = 0
-    for i in range(1, 1000):
-        S += pow(i, i, 10**d)
-        S %= pow(10, d)
-    return S
-
-print(get_self_pow_sum(10))
+def sum_self_pow(n: int, d: int) -> int:
+    """Get the sum of 1^1 + 2^2 + 3^3 + ... + n^n mod d."""
+    self_pow_sum = 0
+    for i in range(1, n + 1):
+        self_pow_sum += pow(i, i, 10**d)
+        self_pow_sum %= pow(10, d)
+    return self_pow_sum
