@@ -1,18 +1,8 @@
-import operator as op
-from functools import reduce
+from math import comb
 
-def ncr(n, r):
-    r = min(r, n-r)
-    numer = reduce(op.mul, range(n, n-r, -1), 1)
-    denom = reduce(op.mul, range(1, r+1), 1)
-    return numer // denom
 
-def count_ncr_greater_than(N):
-    count = 0
-    for n in range(1, 101):
-        for r in range(n + 1):
-            if ncr(n, r) > N:
-                count += 1
-    return count
-
-print(count_ncr_greater_than(10**6))
+def count_ncr_greater_than(m: int) -> int:
+    """Count the number of n choose r greater than m for 1 <= n <= 100."""
+    return sum(
+        1 for n in range(1, 101) for r in range(n + 1) if comb(n, r) > m
+    )
