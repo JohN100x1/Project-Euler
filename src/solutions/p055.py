@@ -1,6 +1,7 @@
-def get_lychrel_count(N):
+def count_lychrel_nums(n: int) -> int:
+    """Get the number of Lychrel numbers below n < 10,000."""
     count = 0
-    for x in range(1, N):
+    for x in range(1, n):
         for iterations in range(50):
             x += int(str(x)[::-1])
             if str(x) == str(x)[::-1]:
@@ -8,5 +9,3 @@ def get_lychrel_count(N):
         else:
             count += 1
     return count
-
-print(get_lychrel_count(10000))

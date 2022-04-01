@@ -1,15 +1,13 @@
-def get_sqrt2_continued_fraction_digit_count(N):
+def count_sqrt2_continued_fraction_numer_digit(n: int) -> int:
+    """
+    Get the number of fractions in the first n expansions of sqrt 2 such that
+    the numerator has more digits than the denominator.
+    """
     count = 0
-    numers = [1]
-    denoms = [2]
-    for i in range(N + 1):
-        numer = denoms[-1]
-        denom = 2*denoms[-1] + numers[-1]
-        numers[-1] = numer + denom
-        if len(str(numers[-1])) > len(str(denom)):
+    numerator = 1
+    denominator = 2
+    for i in range(n + 1):
+        numerator, denominator = denominator, 2 * denominator + numerator
+        if len(str(numerator + denominator)) > len(str(denominator)):
             count += 1
-        numers.append(numer)
-        denoms.append(denom)
     return count
-
-print(get_sqrt2_continued_fraction_digit_count(1000))
