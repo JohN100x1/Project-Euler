@@ -1,4 +1,4 @@
-from utils.primes import is_prime
+from sympy import isprime
 
 
 def perm_last(dlist: list[int], k: int) -> list[list[int]]:
@@ -28,5 +28,5 @@ def get_largest_pandigital_prime() -> int:
         dlist = list(range(k, 0, -1))
         for perm in perm_last(dlist, k):
             p = sum(d * 10**i for i, d in enumerate(perm[::-1]))
-            if is_prime(p):
+            if isprime(p):
                 return p
