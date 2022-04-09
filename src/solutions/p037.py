@@ -1,4 +1,4 @@
-from config import PRIME_SET, PRIMES
+from utils.primes import get_primes
 
 
 def sum_truncatable_primes(max_count=11) -> int:
@@ -6,15 +6,17 @@ def sum_truncatable_primes(max_count=11) -> int:
     # Exclude first 4 primes from sum
     prime_sum = 0
     count = 0
-    for p in PRIMES[4:]:
+    primes = get_primes(10**6)
+    prime_set = set(primes)
+    for p in primes[4:]:
         len_p = len(str(p))
 
         # Check Right truncatable
-        if any(p // 10**i not in PRIME_SET for i in range(len_p)):
+        if any(p // 10**i not in prime_set for i in range(len_p)):
             continue
 
         # Check left truncatable
-        if any(p % pow(10, j) not in PRIME_SET for j in range(len_p, 0, -1)):
+        if any(p % pow(10, j) not in prime_set for j in range(len_p, 0, -1)):
             continue
 
         # Add prime to sum

@@ -1,6 +1,3 @@
-from math import log
-
-
 def get_primes(n: int) -> list:
     """Returns a list of primes less than n."""
     sieve = [True] * n

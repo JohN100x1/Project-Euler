@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from config import PRIMES
+from utils.prime_config import PRIMES
 
 
 def get_num_divisors(n: int) -> int:

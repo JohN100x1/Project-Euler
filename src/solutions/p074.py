@@ -1,36 +1,35 @@
-FACTORIAL = {0:1, 1:1, 2:2, 3:6, 4:24, 5:120, 6:720, 7:5040, 8:40320, 9:362880}
+from config import DIGIT_FACTORIALS
 
-def get_sum_digit_factorial(n):
-    dfsum = FACTORIAL[n % 10]
-    while n // 10 != 0:
-        n //= 10
-        dfsum += FACTORIAL[n%10]
-    return dfsum
 
-def get_count_with_chain_length(L, N):
+def sum_digit_factorial(n: int) -> int:
+    """Get the sum of the factorial of the digits of n."""
+    return sum(DIGIT_FACTORIALS[d] for d in str(n))
+
+
+def count_chains_with_length(length: int, max_n: int) -> int:
+    """Get the number of digit factorial sum chains with 60 non-repeating."""
     chain = {}
     count = 0
-    for n0 in range(N):
+    for n0 in range(max_n):
         n = n0
-        sublist = []
-        subchain = {}
-        subcount = 0
-        while n not in chain and n not in subchain:
-            subchain[n] = subcount
-            sublist.append(n)
-            subcount += 1
-            n = get_sum_digit_factorial(n)
+        sub_chain = {}
+        sub_count = 0
+        # Get the next terms of the digit factorial sum until it hits a chain
+        while n not in chain and n not in sub_chain:
+            sub_chain[n] = sub_count
+            sub_count += 1
+            n = sum_digit_factorial(n)
+        # If the latest value is in the chain, add all values from sub-chain
         if n in chain:
-            for i, m in enumerate(reversed(sublist)):
-                chain[m] = chain[n] + i + 1
-        elif n in subchain:
-            for i, m in enumerate(sublist):
-                if i >= subchain[n]:
-                    chain[m] = subcount - subchain[n]
+            for i, m in enumerate(reversed(sub_chain), 1):
+                chain[m] = chain.get(n) + i
+        # If it's in the sub-chain, calculate the length of the period
+        elif n in sub_chain:
+            for i, m in enumerate(sub_chain):
+                if i >= sub_chain[n]:
+                    chain[m] = sub_count - sub_chain[n]
                 else:
-                    chain[m] = len(sublist) - i
-        if chain[n0] >= L:
+                    chain[m] = len(sub_chain) - i
+        if chain[n0] >= length:
             count += 1
     return count
-
-print(get_count_with_chain_length(60,10**6))

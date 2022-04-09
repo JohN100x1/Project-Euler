@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from config import PRIMES
+from utils.primes import get_primes
 
 
 def get_smallest_eight_prime_value_family() -> int:
@@ -14,7 +14,7 @@ def get_smallest_eight_prime_value_family() -> int:
     NOTE: since PRIMES < 10^6, there's only 1 repeated_digit
     """
     repeated = {}
-    for p in PRIMES:
+    for p in get_primes(10**6):
         repeated_digit = None
         prime_string = str(p)[::-1]
         digit_lists = defaultdict(list)
