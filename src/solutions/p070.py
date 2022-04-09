@@ -1,20 +1,30 @@
-def get_primes(n):
-    """ Returns a list of primes < n """
-    sieve = [True] * n
-    for i in range(3,int(n**0.5)+1,2):
-        if sieve[i]:
-            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
-    return [2] + [i for i in range(3,n,2) if sieve[i]]
+from utils.primes import get_primes
 
-def get_min_totient_ratio_perm(n):
-    ratios = {}
-    primes = get_primes(n)
-    totients = [i for i in range(2,n)]
-    for p in primes:
-        totients[p-2::p] = [k-k//p for k in totients[p-2::p]]
-    for i, t in enumerate(totients, 2):
-        if sorted(str(i)) == sorted(str(t)):
-            ratios[i] = i/t
-    return min(ratios, key=ratios.get)
 
-print(get_min_totient_ratio_perm(10**7))
+def get_min_phi_ratio_perm(max_n: int) -> int:
+    """
+    Get the values of 1 < n < 10^7 such that n and phi(n) are permutations and
+    n/phi(n) is minimum.
+
+    This is achieved when n = p1 * p2 for primes p1 and p2.
+    Also, phi(p1 * p2) = (p1 - 1)(p2 - 1)
+    """
+    # Obviously you won't know the search range 10^3 < p < 10^4 beforehand
+    bounded_primes = [p for p in get_primes(max_n) if 10**3 < p < 10**4]
+    len_primes = len(bounded_primes)
+
+    sol_n = 0
+    min_ratio = float("inf")
+
+    for i, p in enumerate(bounded_primes):
+        for j in range(i + 1, len_primes):
+            q = bounded_primes[j]
+            n = p * q
+            if n > 10000000:
+                break
+            phi = (p - 1) * (q - 1)
+            ratio = n / phi
+            if ratio < min_ratio and sorted(str(n)) == sorted(str(phi)):
+                min_ratio = ratio
+                sol_n = n
+    return sol_n
