@@ -1,124 +1,124 @@
-import random
+from collections import defaultdict
 
-def is_maybe_prime(n, k=7):
-    if n == 2 or n == 3:
+from utils.primes import get_primes, miller_rabin_is_prime
+
+
+def is_pair(p: int, q: int) -> bool:
+    """Return boolean of whether p and q concatenate to form a prime."""
+    p_string, q_string = str(p), str(q)
+    num1, num2 = int(p_string + q_string), int(q_string + p_string)
+    if miller_rabin_is_prime(num1) and miller_rabin_is_prime(num2):
         return True
-    elif n % 2 == 0:
-        return False
-    else:
-        r, s = 0, n - 1
-        while s % 2 == 0:
-            r += 1
-            s //= 2
-        for _ in range(k):
-            a = random.randrange(2, n - 1)
-            x = pow(a, s, n)
-            if x == 1 or x == n - 1:
-                continue
-            for _ in range(r - 1):
-                x = pow(x, 2, n)
-                if x == n - 1:
-                    break
-            else:
-                return False
-        return True
+    return False
 
-def check_list(plist):
-    for p in plist:
-        for q in plist:
-            if p == q:
-                continue
-            if not is_maybe_prime(int(str(p)+str(q))):
-                return False
-    return True
 
-def get_primes(n):
-    """ Returns  a list of primes < n """
-    sieve = [True] * n
-    for i in range(3,int(n**0.5)+1,2):
-        if sieve[i]:
-            sieve[i*i::2*i]=[False]*((n-i*i-1)//(2*i)+1)
-    return [2] + [i for i in range(3,n,2) if sieve[i]]
-
-PRIMES = get_primes(10**4)
-
-def get_prime_pairs():
-    pairs = {}
-    for i, p in enumerate(PRIMES):
-        for q in PRIMES[i+1:]:
+def get_prime_pairs(
+    primes: list[int],
+) -> tuple[dict[int, list[int]], set[tuple[int, int]]]:
+    """
+    Get a dictionary of prime keys and lists where each value in the list is
+    prime-concatenable with its prime key. Also get a set of 2-tuples which
+    are prime-concatenable.
+    """
+    len_primes = len(primes)
+    pairs = defaultdict(list)
+    set_pairs = set()
+    for i, p in enumerate(primes):
+        next_primes = []
+        for j in range(i + 1, len_primes):
+            q = primes[j]
             if not is_pair(p, q):
                 continue
-            elif p in pairs:
-                pairs[p].add(q)
-            else:
-                pairs[p] = {q}
-    return pairs
+            next_primes.append(q)
+            set_pairs.add((p, q))
+        if len(next_primes) > 3:
+            pairs[p].extend(next_primes)
+    return pairs, set_pairs
 
-def is_pair(p, q):
-    num1 = int(str(p)+str(q))
-    num2 = int(str(q)+str(p))
-    if not is_maybe_prime(num1):
-        return False
-    elif not is_maybe_prime(num2):
-        return False
-    else:
-        return True
 
-def get_prime_triples(pairs):
-    triples = {}
-    for p, qvals in pairs.items():
-        for q in qvals:
-            if q not in pairs:
-                continue
-            for r in pairs[q]:
-                if is_pair(p, r):
-                    if p not in triples:
-                        triples[p] = {}
-                    
-                    if q not in triples[p]:
-                        triples[p][q] = {r}
-                    else:
-                        triples[p][q].add(r)
-    return triples
+class PrimeConcatenableFive:
+    """Find 5 pairwise prime-concatenable pairs for a given list of primes."""
 
-def get_prime_quads(pairs, triples):
-    quads = {}
-    for p, pair in triples.items():
-        for q, rvals in pair.items():
-            for r in rvals:
-                if r not in pair:
+    def __init__(self, primes: list[int]):
+        results = get_prime_pairs(primes)
+        self.adj_pairs: dict[int, list[int]] = results[0]
+        self.set_pairs: set[tuple[int, int]] = results[1]
+
+    def can_pair(self, prs: tuple[int, ...], x: int) -> bool:
+        """Check if x is pairwise prime-concatenable with every pr in prs."""
+        return all((pr, x) in self.set_pairs for pr in prs)
+
+    def get_five(self) -> set[tuple[int, int, int, int, int]]:
+        """Get a set of 5-tuples which are pairwise prime-concatenable."""
+        triples = self._prime_triples()
+        quadruples = self._prime_quads(triples)
+        return self._prime_quins(quadruples)
+
+    def _prime_triples(self) -> dict[int, dict[int, list[int]]]:
+        """Return a 3-deep, pairwise prime-concatenable integer dict."""
+        triples = defaultdict(dict)
+        for p, p_pairs in self.adj_pairs.items():
+            for q in p_pairs:
+                if (p, q) not in self.set_pairs:
                     continue
-                for s in pairs[r]:
-                    if is_pair(p, s) and is_pair(q, s):
-                        if p not in quads:
-                            quads[p] = {}
-                        if q not in quads[p]:
-                            quads[p][q] = {}
-                        
-                        if r not in quads[p][q]:
-                            quads[p][q][r] = {s}
-                        else:
-                            quads[p][q][r].add(s)
-    return quads
-
-def get_prime_quins(pairs, quads):
-    quins = set()
-    for p, triple in quads.items():
-        for q, pair in triple.items():
-            for r, svals in pair.items():
-                for s in svals:
-                    if s not in pair:
+                next_primes = []
+                for r in self.adj_pairs.get(q, []):
+                    if (p, r) not in self.set_pairs:
                         continue
-                    for t in pairs[s]:
-                        if is_pair(p, t) and is_pair(q, t) and is_pair(r, t):
-                            quins.add((p, q, r, s, t))
-    return quins
+                    next_primes.append(r)
+                if len(next_primes) > 2:
+                    triples[p][q] = next_primes
+        return triples
 
-def get_smallest_prime_quins_sum():
-    pairs = get_prime_pairs()
-    triples = get_prime_triples(pairs)
-    quads = get_prime_quads(pairs, triples)
-    quins = get_prime_quins(pairs, quads)
-    return min(sum(plist) for plist in quins)
+    def _prime_quads(
+        self, triples: dict[int, dict[int, list[int]]]
+    ) -> dict[int, dict[int, dict[int, list]]]:
+        """Return a 4-deep, pairwise prime-concatenable integer dict."""
+        quads = defaultdict(dict)
+        for p, p_pairs in triples.items():
+            for q, q_pairs in p_pairs.items():
+                for r in q_pairs:
+                    if not self.can_pair((p, q), r):
+                        continue
+                    next_primes = []
+                    for s in self.adj_pairs.get(r, []):
+                        if not self.can_pair((p, q), s):
+                            continue
+                        next_primes.append(s)
+                    if len(next_primes) > 1:
+                        if q not in quads.get(p, {}):
+                            quads[p][q] = {}
+                        quads[p][q][r] = next_primes
+        return quads
 
-print(get_smallest_prime_quins_sum())
+    def _prime_quins(
+        self, quads: dict[int, dict[int, dict[int, list]]]
+    ) -> set[tuple[int, int, int, int, int]]:
+        """Get a set of 5-tuples which are pairwise prime-concatenable."""
+        quins = set()
+        for p, triple in quads.items():
+            for q, pair in triple.items():
+                for r, r_pairs in pair.items():
+                    for s in r_pairs:
+                        if not self.can_pair((p, q, r), s):
+                            continue
+                        for t in self.adj_pairs.get(s, []):
+                            if self.can_pair((p, q, r), t):
+                                quins.add((p, q, r, s, t))
+        return quins
+
+
+def sum_min_five_prime_pairs() -> int:
+    """Get the lowest sum of 5 primes which pairwise concatenate to a prime."""
+    primes = get_primes(10**4)
+    # prime mod 3 = 1 must concatenate to prime mod 3 = 1
+    # prime mod 3 = 2 must concatenate to prime mod 3 = 2
+    one_primes = [3] + [p for p in primes if p % 3 == 1]
+    two_primes = [3] + [p for p in primes if p % 3 == 2]
+
+    prime_concatenable = PrimeConcatenableFive(one_primes)
+    solutions = prime_concatenable.get_five()
+
+    prime_concatenable = PrimeConcatenableFive(two_primes)
+    solutions |= prime_concatenable.get_five()
+    return min(sum(plist) for plist in solutions)
