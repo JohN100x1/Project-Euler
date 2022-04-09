@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Generator
 
 from utils.primes import get_primes, miller_rabin_is_prime
 
@@ -54,20 +55,45 @@ class PrimeConcatenableFive:
         quadruples = self._prime_quads(triples)
         return self._prime_quins(quadruples)
 
+    def generate_prime_pairs(self) -> Generator[tuple[int, int], None, None]:
+        """Generate prime-concatenable pairs p and q."""
+        for p, p_pairs in self.adj_pairs.items():
+            for q in p_pairs:
+                if (p, q) in self.set_pairs:
+                    yield p, q
+
+    def generate_prime_triples(
+        self, triples: dict[int, dict[int, list[int]]]
+    ) -> Generator[tuple[int, int, int], None, None]:
+        """Generate prime-concatenable pairs p, q and r."""
+        for p, p_pairs in triples.items():
+            for q, q_pairs in p_pairs.items():
+                for r in q_pairs:
+                    if self.can_pair((p, q), r):
+                        yield p, q, r
+
+    def generate_prime_quads(
+        self, quads: dict[int, dict[int, dict[int, list]]]
+    ) -> Generator[tuple[int, int, int, int], None, None]:
+        """Generate prime-concatenable pairs p, q and r."""
+        for p, triple in quads.items():
+            for q, pair in triple.items():
+                for r, r_pairs in pair.items():
+                    for s in r_pairs:
+                        if self.can_pair((p, q, r), s):
+                            yield p, q, r, s
+
     def _prime_triples(self) -> dict[int, dict[int, list[int]]]:
         """Return a 3-deep, pairwise prime-concatenable integer dict."""
         triples = defaultdict(dict)
-        for p, p_pairs in self.adj_pairs.items():
-            for q in p_pairs:
-                if (p, q) not in self.set_pairs:
+        for p, q in self.generate_prime_pairs():
+            next_primes = []
+            for r in self.adj_pairs.get(q, []):
+                if (p, r) not in self.set_pairs:
                     continue
-                next_primes = []
-                for r in self.adj_pairs.get(q, []):
-                    if (p, r) not in self.set_pairs:
-                        continue
-                    next_primes.append(r)
-                if len(next_primes) > 2:
-                    triples[p][q] = next_primes
+                next_primes.append(r)
+            if len(next_primes) > 2:
+                triples[p][q] = next_primes
         return triples
 
     def _prime_quads(
@@ -75,20 +101,16 @@ class PrimeConcatenableFive:
     ) -> dict[int, dict[int, dict[int, list]]]:
         """Return a 4-deep, pairwise prime-concatenable integer dict."""
         quads = defaultdict(dict)
-        for p, p_pairs in triples.items():
-            for q, q_pairs in p_pairs.items():
-                for r in q_pairs:
-                    if not self.can_pair((p, q), r):
-                        continue
-                    next_primes = []
-                    for s in self.adj_pairs.get(r, []):
-                        if not self.can_pair((p, q), s):
-                            continue
-                        next_primes.append(s)
-                    if len(next_primes) > 1:
-                        if q not in quads.get(p, {}):
-                            quads[p][q] = {}
-                        quads[p][q][r] = next_primes
+        for p, q, r in self.generate_prime_triples(triples):
+            next_primes = []
+            for s in self.adj_pairs.get(r, []):
+                if not self.can_pair((p, q), s):
+                    continue
+                next_primes.append(s)
+            if len(next_primes) > 1:
+                if q not in quads.get(p, {}):
+                    quads[p][q] = {}
+                quads[p][q][r] = next_primes
         return quads
 
     def _prime_quins(
@@ -96,15 +118,10 @@ class PrimeConcatenableFive:
     ) -> set[tuple[int, int, int, int, int]]:
         """Get a set of 5-tuples which are pairwise prime-concatenable."""
         quins = set()
-        for p, triple in quads.items():
-            for q, pair in triple.items():
-                for r, r_pairs in pair.items():
-                    for s in r_pairs:
-                        if not self.can_pair((p, q, r), s):
-                            continue
-                        for t in self.adj_pairs.get(s, []):
-                            if self.can_pair((p, q, r), t):
-                                quins.add((p, q, r, s, t))
+        for p, q, r, s in self.generate_prime_quads(quads):
+            for t in self.adj_pairs.get(s, []):
+                if self.can_pair((p, q, r), t):
+                    quins.add((p, q, r, s, t))
         return quins
 
 
