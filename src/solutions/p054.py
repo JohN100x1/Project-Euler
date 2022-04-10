@@ -10,7 +10,7 @@ ROYALS = [10, 11, 12, 13, 14]
 def load_hands() -> list[str]:
     """Loads a list of strings from /res/p054_poker.txt."""
     with open(path_res / "p054_poker.txt") as f:
-        return f.read().split("\n")[:-1]
+        return f.read().split("\n")
 
 
 def is_flush(hand: str) -> bool:

@@ -1,15 +1,29 @@
-def get_partition_divisible_by(d, maxit=10**6):
-    plist = [1, 1]
-    for x in range(2, maxit+1):
-        psum = 0
-        sqrt1p24x = (1+24*x)**0.5
-        for k in range(1, int(1+sqrt1p24x)//6+1):
-            psum += (-1)**(k+1)*plist[x-k*(3*k-1)//2]
-        for k in range(1, int(-1+sqrt1p24x)//6+1):
-            psum += (-1)**(k+1)*plist[x-k*(3*k+1)//2]
-        if psum % d == 0:
-            return x
-        plist.append(psum)
-    return None
+import itertools
 
-print(get_partition_divisible_by(10**6))
+
+def get_partition_divisible_by(d: int) -> int:
+    """
+    Get the smallest n such that the number of partitions of n is divided by d.
+
+    NOTE: Not my solution, Source: https://github.com/TheAlgorithms/Python/
+    """
+    partitions = [1]
+
+    for i in itertools.count(len(partitions)):
+        item = 0
+        for j in itertools.count(1):
+            sign = -1 if j % 2 == 0 else +1
+            index = (j * j * 3 - j) // 2
+            if index > i:
+                break
+            item += partitions[i - index] * sign
+            item %= d
+            index += j
+            if index > i:
+                break
+            item += partitions[i - index] * sign
+            item %= d
+
+        if item == 0:
+            return i
+        partitions.append(item)
