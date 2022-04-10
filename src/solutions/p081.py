@@ -1,31 +1,37 @@
 import numpy as np
 
-MATRIX = np.loadtxt("p081_matrix.txt", dtype=np.int32, delimiter = ",")
+from config import path_res
 
-def get_two_way_min_path_sum():
-    ubound = MATRIX.shape[0] + MATRIX.shape[1] - 2
-    halfway = (MATRIX.shape[0] + MATRIX.shape[1])//2
-    psums1 = [MATRIX[-1][-1]]
+
+def load_matrix() -> np.array:
+    """Load the matrix of integers from /res/p081_matrix.txt"""
+    path_txt = path_res / "p081_matrix.txt"
+    return np.loadtxt(path_txt, dtype=np.int32, delimiter=",")
+
+
+def get_two_way_min_path_sum(matrix: np.array) -> int:
+    """Get the minimum path sum going only RIGHT and DOWN starting top-left."""
+    ubound = matrix.shape[0] + matrix.shape[1] - 2
+    halfway = (matrix.shape[0] + matrix.shape[1]) // 2
+    path_sums1 = [matrix[-1][-1]]
     for i in range(ubound, 0, -1):
-        psums1, psums2 = [], psums1
-        diag = np.diag(MATRIX[::-1,:], i-MATRIX.shape[0])
-        uboundj = len(diag) - 1
+        path_sums1, path_sums2 = [], path_sums1
+        diagonal = np.diag(matrix[::-1, :], i - matrix.shape[0])
+        limit = len(diagonal) - 1
         if i >= halfway:
-            for j, n in enumerate(diag):
+            for j, n in enumerate(diagonal):
                 if j == 0:
-                    psum = diag[j]+psums2[j]
-                elif j == uboundj:
-                    psum = diag[j]+psums2[j-1]
+                    path_sum = diagonal[j] + path_sums2[j]
+                elif j == limit:
+                    path_sum = diagonal[j] + path_sums2[j - 1]
                 else:
-                    sum1 = diag[j]+psums2[j-1]
-                    sum2 = diag[j]+psums2[j]
-                    psum = min(sum1, sum2)
-                psums1.append(psum)
+                    sum1 = diagonal[j] + path_sums2[j - 1]
+                    sum2 = diagonal[j] + path_sums2[j]
+                    path_sum = min(sum1, sum2)
+                path_sums1.append(path_sum)
         else:
-            for j, n in enumerate(diag):
-                sum1 = diag[j]+psums2[j]
-                sum2 = diag[j]+psums2[j+1]
-                psums1.append(min(sum1, sum2))
-    return psums1[0]
-
-print(get_two_way_min_path_sum())
+            for j, n in enumerate(diagonal):
+                sum1 = diagonal[j] + path_sums2[j]
+                sum2 = diagonal[j] + path_sums2[j + 1]
+                path_sums1.append(min(sum1, sum2))
+    return path_sums1[0]
