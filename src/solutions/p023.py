@@ -1,27 +1,29 @@
-from utils.div import sum_proper_factors
+def get_proper_factor_sums(n: int) -> list[int]:
+    """Get a list of proper factor sums for all numbers less than n."""
+    # Get the proper factor sums
+    proper_factor_sums = [1] * n
+    for i in range(2, int(n**0.5) + 1):
+        proper_factor_sums[i * i] += i
+        for k in range(i + 1, n // i + 1):
+            proper_factor_sums[i * k] += i + k
+    return proper_factor_sums
 
 
-def get_abundant_nums(n: int) -> list[int]:
-    """
-    Get a set of abundant numbers less than n.
-    (The sum of an abundant number's proper factors is greater than itself.)
-    """
-    return [i for i in range(12, n + 1) if sum_proper_factors(i) > i]
-
-
-def get_non_sum_two_abundant():
+def get_non_sum_two_abundant(limit=28123):
     """
     Get the sum of all positive integers which cannot be written as the
-    sum of two abundant numbers.
+    sum of two abundant numbers. Any integer bigger than 28123 can be written
+    as a sum of two abundant numbers.
     """
-    ubound = 28123
-    abundant_nums = get_abundant_nums(ubound)
-    # Get sum of numbers which are NOT a sum of two abundant numbers
-    sta = set()
-    for i, a in enumerate(abundant_nums):
-        for b in abundant_nums[i:]:
-            ab_sum = a + b
-            if ab_sum > ubound:
-                break
-            sta.add(ab_sum)
-    return sum(x for x in range(1, ubound) if x not in sta)
+
+    proper_factor_sums = get_proper_factor_sums(limit)
+
+    ab_sum = 0
+    abundant_nums = set()
+
+    for i in range(1, limit):
+        if proper_factor_sums[i] > i:
+            abundant_nums.add(i)
+        if not any(i - a in abundant_nums for a in abundant_nums):
+            ab_sum += i
+    return ab_sum

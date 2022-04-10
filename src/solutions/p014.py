@@ -11,6 +11,11 @@ def get_chain_len(n: int, chain_len: dict) -> int:
 def get_longest_collatz_seq(max_n: int) -> int:
     """Get maximum chain length for starting integer n < max_n."""
     chain_len = {1: 1}
-    for n in range(2, max_n):
+    sol_n = -1
+    max_length = 0
+    for n in range(max_n // 2, max_n):
         chain_len[n] = get_chain_len(n, chain_len)
-    return max(chain_len, key=chain_len.get)
+        if chain_len[n] > max_length:
+            sol_n = n
+            max_length = chain_len[n]
+    return sol_n
