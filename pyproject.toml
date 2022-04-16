@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "project euler"
-version = "0.2.7"
+version = "87.0.0"
 description = "Solutions to https://projecteuler.net/"
 authors = ["JohN100x1 <JohN100x1@hotmail.co.uk>"]
 
