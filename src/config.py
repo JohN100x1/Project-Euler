@@ -16,3 +16,7 @@ DIGIT_FACTORIALS = {str(i): factorial(i) for i in range(10)}
 
 # Fifth powers
 DIGIT_FIFTH_POWER = {str(i): i**5 for i in range(10)}
+
+# Roman numerals
+NUMERAL_VAL = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
+NUMERAL_CHR = {1000: "M", 500: "D", 100: "C", 50: "L", 10: "X", 5: "V", 1: "I"}
