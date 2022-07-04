@@ -1,3 +1,6 @@
+from utils.exceptions import SolutionNotFoundError
+
+
 def get_area_nearest_solution(start_count: int, limit=1000) -> int:
     """
     Get the area of the rectangle such that the number of sub-rectangles is
@@ -18,3 +21,4 @@ def get_area_nearest_solution(start_count: int, limit=1000) -> int:
                     return (x - 1) * (int(y) - 1)
         counts[0] += 1
         counts[1] -= 1
+    raise SolutionNotFoundError(f"Cannot find solution with {limit=}")
