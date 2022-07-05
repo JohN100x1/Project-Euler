@@ -24,7 +24,7 @@ def get_max_pandigital_concat() -> int:
     ubound = pow(10, 4)
     for x in range(1, ubound):
         n = 1
-        digits = []
+        digits: list[int] = []
         while len(digits) < 9:
             product = x * n
             digits += list(map(int, str(product)))

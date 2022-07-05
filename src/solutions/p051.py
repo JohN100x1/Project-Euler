@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import get_primes
 
 
@@ -38,3 +39,4 @@ def get_smallest_eight_prime_value_family() -> int:
                 family.add(q)
         if len(family) == 8:
             return min(family)
+    raise SolutionNotFoundError("Failed to solve p051.")

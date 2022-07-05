@@ -30,7 +30,7 @@ class FiveGon:
             str(five_gon[9]) + str(five_gon[8]) + str(five_gon[1]),
         ]
         out_nodes = {i: five_gon[j] for i, j in enumerate((0, 3, 5, 7, 9))}
-        min_idx = min(out_nodes, key=out_nodes.get)
+        min_idx = min(out_nodes, key=out_nodes.__getitem__)
         return "".join(lines[(i + min_idx) % 5] for i in range(5))
 
     def is_possible(self, idx: int, v: int) -> bool:

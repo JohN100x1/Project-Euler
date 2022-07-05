@@ -8,7 +8,7 @@ def sum_digit_factorial(n: int) -> int:
 
 def count_chains_with_length(length: int, max_n: int) -> int:
     """Get the number of digit factorial sum chains with 60 non-repeating."""
-    chain = {}
+    chain: dict[int, int] = {}
     count = 0
     for n0 in range(max_n):
         n = n0
@@ -22,7 +22,7 @@ def count_chains_with_length(length: int, max_n: int) -> int:
         # If the latest value is in the chain, add all values from sub-chain
         if n in chain:
             for i, m in enumerate(reversed(sub_chain), 1):
-                chain[m] = chain.get(n) + i
+                chain[m] = chain[n] + i
         # If it's in the sub-chain, calculate the length of the period
         elif n in sub_chain:
             for i, m in enumerate(sub_chain):

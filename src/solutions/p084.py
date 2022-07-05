@@ -1,7 +1,8 @@
 import numpy as np
+import numpy.typing as npt
 
 
-def get_monopoly_transition_matrix() -> np.array:
+def get_monopoly_transition_matrix() -> npt.NDArray[np.float64]:
     """
     Get the transition matrix for the monopoly board.
 

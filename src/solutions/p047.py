@@ -1,3 +1,6 @@
+from utils.exceptions import SolutionNotFoundError
+
+
 def get_first_consecutive_distinct_prime_factors(max_n: int = 200000) -> int:
     """
     Get the first of 4 consecutive numbers such that they have distinct
@@ -19,3 +22,4 @@ def get_first_consecutive_distinct_prime_factors(max_n: int = 200000) -> int:
         # Composite with Distinct factors != 4
         else:
             counter = 0
+    raise SolutionNotFoundError("Failed to solve p047.")

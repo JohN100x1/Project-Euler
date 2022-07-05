@@ -1,3 +1,4 @@
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import get_primes
 
 
@@ -24,3 +25,4 @@ def get_goldbach_counter_example(n: int = 10000) -> int:
     for odd in range(9, primes[-1], 2):
         if odd not in prime_set and odd not in tsq_sums:
             return odd
+    raise SolutionNotFoundError("Goldbach counter example not found.")

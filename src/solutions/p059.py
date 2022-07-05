@@ -1,4 +1,5 @@
 from config import path_res
+from utils.exceptions import SolutionNotFoundError
 
 
 def load_cipher() -> list[int]:
@@ -22,3 +23,4 @@ def sum_decrypted_ascii_values(cipher: list[int]) -> int:
                 message = decrypt_cipher(cipher, key)
                 if " the " in message:
                     return sum(ord(m) for m in message)
+    raise SolutionNotFoundError("Cannot decrypt message.")

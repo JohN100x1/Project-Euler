@@ -3,7 +3,7 @@ from utils.primes import get_primes
 
 def get_quadratic_primes_longest_pair_product() -> int:
     """
-    Get the product of a and b such that m is maximised for the statement:
+    Get the product of a and b such that m is maximized for the statement:
     n^2 + an + b is prime for all 0 <= n <= m, |a| < 1000, |b| <= 1000
     """
 
@@ -18,9 +18,6 @@ def get_quadratic_primes_longest_pair_product() -> int:
             while n**2 + a * n + b in prime_set:
                 n += 1
             qp_pairs[(a, b)] = n - 1
-    max_pair = max(qp_pairs, key=qp_pairs.get)
+    max_pair = max(qp_pairs, key=qp_pairs.__getitem__)
     product = max_pair[0] * max_pair[1]
     return product
-
-
-print(get_quadratic_primes_longest_pair_product())

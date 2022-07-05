@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from config import path_res
+from utils.exceptions import SolutionNotFoundError
 
 
 class KeyLog(tuple):
@@ -57,3 +58,4 @@ class PasscodeSearch:
         for passcode in self.passcodes:
             if set(int(d) for d in str(passcode)) == dset:
                 return passcode
+        raise SolutionNotFoundError("Failed to find passcode.")

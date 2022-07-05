@@ -1,9 +1,11 @@
 import numpy as np
 
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import get_primes
 
 
 def get_longest_prime_sum(n: int) -> int:
+    """Get the longest consecutive prime sum below 1 million."""
     primes = get_primes(10**6)
     prime_set = set(primes)
     p_sums1 = np.cumsum(primes)
@@ -18,3 +20,4 @@ def get_longest_prime_sum(n: int) -> int:
                 return p_sum
             j += 1
             p_sum = p_sums1[L + j] - p_sums2[j]
+    raise SolutionNotFoundError("Failed to find solution for p050.")

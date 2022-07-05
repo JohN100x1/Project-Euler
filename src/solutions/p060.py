@@ -1,3 +1,4 @@
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import get_primes, miller_rabin_is_prime
 
 
@@ -50,3 +51,4 @@ def sum_min_five_prime_pairs() -> int:
                         t = one_primes[b]
                         if all(is_pair(x, t) for x in (p, q, r, s)):
                             return sum((p, q, r, s, t))
+    raise SolutionNotFoundError("Failed to solve p060.")

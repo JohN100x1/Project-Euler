@@ -1,3 +1,4 @@
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import miller_rabin_is_prime
 
 
@@ -30,3 +31,4 @@ def get_largest_pandigital_prime() -> int:
             p = sum(d * 10**i for i, d in enumerate(perm[::-1]))
             if miller_rabin_is_prime(p):
                 return p
+    raise SolutionNotFoundError("Largest pandigital prime not found.")

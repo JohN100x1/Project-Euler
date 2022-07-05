@@ -12,7 +12,7 @@ def get_phis(n: int) -> list[int]:
 def get_max_ratio(max_n: int) -> int:
     """Get the value of n such that n/phi(n) is maximum."""
     max_idx = 0
-    max_ratio = 0
+    max_ratio = 0.0
     phis = get_phis(max_n)
     for n, phi in enumerate(phis, 2):
         r = n / phi

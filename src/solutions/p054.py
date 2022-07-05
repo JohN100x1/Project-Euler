@@ -45,7 +45,7 @@ def get_hand_rank(hand: str) -> tuple[int, list[int]]:
         return 8, values
 
     # Kind count
-    value_count = defaultdict(int)
+    value_count: dict[int, int] = defaultdict(int)
     for v in values:
         value_count[v] += 1
     count_list = sorted(value_count.values())
@@ -79,7 +79,7 @@ def get_hand_rank(hand: str) -> tuple[int, list[int]]:
                 values.append(v)
             else:
                 end_values.append(v)
-        values.append(end_values * 3)
+        values.extend(end_values * 3)
         return 3, values
 
     # Check Two pairs
@@ -91,7 +91,7 @@ def get_hand_rank(hand: str) -> tuple[int, list[int]]:
                 values.append(v)
             else:
                 end_values.append(v)
-        values.append(sorted(end_values * 2))
+        values.extend(sorted(end_values * 2))
         return 2, values
 
     # Check One pair
@@ -103,7 +103,7 @@ def get_hand_rank(hand: str) -> tuple[int, list[int]]:
                 values.append(v)
             else:
                 end_values.append(v)
-        values.append(end_values * 2)
+        values.extend(end_values * 2)
         return 1, values
 
     # High card

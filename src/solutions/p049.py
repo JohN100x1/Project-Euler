@@ -1,3 +1,4 @@
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import get_primes
 
 
@@ -23,8 +24,9 @@ def get_arth_prime_perms() -> int:
             if sorted(str(p)) == sorted(str(p2)):
                 perms.append(p2)
 
-        # Check if primes form an arthmetic sequence
+        # Check if primes form an arithmetic sequence
         for p3 in perms:
             d = p3 - p
             if p + 2 * d in perms:
                 return int(str(p) + str(p3) + str(p + 2 * d))
+    raise SolutionNotFoundError("Failed to solve p049.")

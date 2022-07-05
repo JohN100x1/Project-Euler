@@ -4,7 +4,7 @@ from collections import defaultdict
 def get_sqrt_period(n: int) -> int:
     """Get the Period the of the continued fraction of the sqrt n."""
     idx = 0
-    qr = defaultdict(int)
+    qr: dict[tuple[int, int, int], int] = defaultdict(int)
 
     sqrtn = n**0.5
     a = int(sqrtn)

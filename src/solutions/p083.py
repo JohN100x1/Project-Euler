@@ -1,9 +1,10 @@
 import numpy as np
+import numpy.typing as npt
 
 from config import path_res
 
 
-def load_matrix() -> np.array:
+def load_matrix() -> npt.NDArray[np.int32]:
     """Load the matrix of integers from /res/p081_matrix.txt"""
     path_txt = path_res / "p081_matrix.txt"
     return np.loadtxt(path_txt, dtype=np.int32, delimiter=",")
@@ -30,15 +31,15 @@ def get_adj(
 
 
 def dijkstra(
-    matrix: np.array, start: tuple[int, int], end: tuple[int, int]
+    matrix: npt.NDArray[np.int32], start: tuple[int, int], end: tuple[int, int]
 ) -> int:
     """Dijkstra's algorithm to find the minimal path."""
     m, n = matrix.shape
     path_sums1 = {start: matrix[start]}
     path_sums2 = {}
     while end not in path_sums2:
-        w = min(path_sums1, key=path_sums1.get)
-        path_sums2[w] = path_sums1.get(w)
+        w = min(path_sums1, key=path_sums1.__getitem__)
+        path_sums2[w] = path_sums1[w]
         del path_sums1[w]
         for x in get_adj(m, n, path_sums2, w):
             if x not in path_sums1:
@@ -48,7 +49,7 @@ def dijkstra(
     return path_sums2[end]
 
 
-def get_four_way_min_path_sum(matrix: np.array) -> int:
+def get_four_way_min_path_sum(matrix: npt.NDArray[np.int32]) -> int:
     """Get the minimum path sum going starting top-left."""
     source = (0, 0)
     destination = (matrix.shape[0] - 1, matrix.shape[1] - 1)

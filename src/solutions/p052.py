@@ -1,3 +1,6 @@
+from utils.exceptions import SolutionNotFoundError
+
+
 def get_permuted_multiples(n: int, max_d=10) -> int:
     """
     Get the smallest number x such that for 1, 2, ..., n,
@@ -13,3 +16,4 @@ def get_permuted_multiples(n: int, max_d=10) -> int:
                     break
             else:
                 return x
+    raise SolutionNotFoundError(f"No solution for d<{max_d}.")

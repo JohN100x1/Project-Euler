@@ -1,5 +1,7 @@
 import itertools
 
+from utils.exceptions import SolutionNotFoundError
+
 
 def get_partition_divisible_by(d: int) -> int:
     """
@@ -27,3 +29,4 @@ def get_partition_divisible_by(d: int) -> int:
         if item == 0:
             return i
         partitions.append(item)
+    raise SolutionNotFoundError("Failed to solve p078.")

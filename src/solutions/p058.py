@@ -1,3 +1,4 @@
+from utils.exceptions import SolutionNotFoundError
 from utils.primes import miller_rabin_is_prime
 
 
@@ -17,3 +18,4 @@ def get_first_side_length_prime_sub_ratio(ratio: float) -> int:
         total += 4
         if count_primes / total < ratio:
             return 2 * x + 1
+    raise SolutionNotFoundError("Failed to solve p058.")

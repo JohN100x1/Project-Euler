@@ -1,14 +1,15 @@
 import numpy as np
+import numpy.typing as npt
 
 from config import path_res
 
 
-def load_grid() -> np.array:
+def load_grid() -> npt.NDArray[np.int64]:
     """Load grid of integers from /res/p011_grid.txt"""
     return np.loadtxt(path_res / "p011_grid.txt", dtype=np.int64)
 
 
-def get_largest_prod(grid: np.array) -> int:
+def get_largest_prod(grid: npt.NDArray[np.int64]) -> int:
     """Get the largest product of 4 numbers in line on the grid."""
 
     max_product = 1

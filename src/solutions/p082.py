@@ -1,15 +1,16 @@
 import numpy as np
+import numpy.typing as npt
 
 from config import path_res
 
 
-def load_matrix() -> np.array:
+def load_matrix() -> npt.NDArray[np.int32]:
     """Load the matrix of integers from /res/p081_matrix.txt"""
     path_txt = path_res / "p081_matrix.txt"
     return np.loadtxt(path_txt, dtype=np.int32, delimiter=",")
 
 
-def get_three_way_min_path_sum(matrix: np.array) -> int:
+def get_three_way_min_path_sum(matrix: npt.NDArray[np.int32]) -> int:
     """
     Get the minimum path sum going only UP, DOWN and RIGHT starting left.
 
