@@ -18,24 +18,20 @@ def count_cube_digit_pairs() -> int:
 
 def is_possible(set_a: set[int], set_b: set[int]) -> bool:
     """Checks whether the two sets of 6 digits can form all squares."""
-    six_nine_in_a = 6 in set_a or 9 in set_a
-    six_nine_in_b = 6 in set_b or 9 in set_b
-    if not (0 in set_a and 1 in set_b or 1 in set_a and 0 in set_b):
-        return False
-    if not (0 in set_a and 4 in set_b or 4 in set_a and 0 in set_b):
-        return False
-    if not (0 in set_a and six_nine_in_b or six_nine_in_a and 0 in set_b):
-        return False
-    if not (1 in set_a and six_nine_in_b or six_nine_in_a and 1 in set_b):
-        return False
-    if not (2 in set_a and 5 in set_b or 5 in set_a and 2 in set_b):
-        return False
-    if not (3 in set_a and six_nine_in_b or six_nine_in_a and 3 in set_b):
-        return False
-    if not (4 in set_a and six_nine_in_b or six_nine_in_a and 4 in set_b):
-        return False
-    if not (six_nine_in_a and 4 in set_b or 4 in set_a and six_nine_in_b):
-        return False
-    if not (8 in set_a and 1 in set_b or 1 in set_a and 8 in set_b):
-        return False
+    pairs_to_check = [
+        (0, 1),
+        (0, 4),
+        (0, 9),
+        (1, 6),
+        (2, 5),
+        (3, 6),
+        (4, 9),
+        (6, 4),
+        (8, 1),
+    ]
+    aug_a = set_a | {6, 9} if 6 in set_a or 9 in set_a else set_a
+    aug_b = set_b | {6, 9} if 6 in set_b or 9 in set_b else set_b
+    for x, y in pairs_to_check:
+        if not (x in aug_a and y in aug_b or y in aug_a and x in aug_b):
+            return False
     return True
