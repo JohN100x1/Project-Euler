@@ -18,17 +18,7 @@ def count_cube_digit_pairs() -> int:
 
 def is_possible(set_a: set[int], set_b: set[int]) -> bool:
     """Checks whether the two sets of 6 digits can form all squares."""
-    pairs_to_check = [
-        (0, 1),
-        (0, 4),
-        (0, 9),
-        (1, 6),
-        (2, 5),
-        (3, 6),
-        (4, 9),
-        (6, 4),
-        (8, 1),
-    ]
+    pairs_to_check = [(i**2 // 10, i**2 % 10) for i in range(1, 10)]
     aug_a = set_a | {6, 9} if 6 in set_a or 9 in set_a else set_a
     aug_b = set_b | {6, 9} if 6 in set_b or 9 in set_b else set_b
     for x, y in pairs_to_check:
