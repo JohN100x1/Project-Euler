@@ -1,7 +1,6 @@
 def total_frac(max_d: int) -> int:
     """Get the total number of fractions between 1/3 and 1/2."""
-    q = max_d // 6
-    r = max_d % 6
+    q, r = divmod(max_d, 6)
     f = q * (3 * q - 2 + r)
     if r == 5:
         f += 1
