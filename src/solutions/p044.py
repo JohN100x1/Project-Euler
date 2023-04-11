@@ -8,7 +8,7 @@ def get_min_pentagonal_diff(n: int = 3000) -> int:
     """
     pentagonals = [n * (3 * n - 1) // 2 for n in range(1, int(1.5 * n))]
     set_pentagonals = set(pentagonals)
-    diff = 9999999999999999999999999999999
+    diff = 1e400
     for i, pi in enumerate(pentagonals, 1):
         for j in range(int((1 + (72 * i - 47) ** 0.5) / 6), i):
             pj = pentagonals[j - 1]
