@@ -18,13 +18,11 @@ def get_partition_divisible_by(d: int) -> int:
             index = (j * j * 3 - j) // 2
             if index > i:
                 break
-            item += partitions[i - index] * sign
-            item %= d
+            item = (item + partitions[i - index] * sign) % d
             index += j
             if index > i:
                 break
-            item += partitions[i - index] * sign
-            item %= d
+            item = (item + partitions[i - index] * sign) % d
 
         if item == 0:
             return i
