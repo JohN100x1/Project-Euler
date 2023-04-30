@@ -1,13 +1,13 @@
 import numpy as np
 import numpy.typing as npt
-
-from config import path_res
+from requests import get
 
 
 def load_matrix() -> npt.NDArray[np.int32]:
-    """Load the matrix of integers from /res/p081_matrix.txt"""
-    path_txt = path_res / "p081_matrix.txt"
-    return np.loadtxt(path_txt, dtype=np.int32, delimiter=",")
+    """Load the matrix of integers from p081_matrix.txt"""
+    url = "https://projecteuler.net/project/resources/p081_matrix.txt"
+    content = get(url).content.decode("utf-8").rstrip("\n").replace(",", " ")
+    return np.fromstring(content, dtype=np.int32, sep="\n").reshape(80, 80)
 
 
 def get_two_way_min_path_sum(matrix: npt.NDArray[np.int32]) -> int:

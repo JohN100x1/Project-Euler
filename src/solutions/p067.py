@@ -1,11 +1,12 @@
-from config import path_res
+from requests import get
 
 
 def load_paths() -> list[list[int]]:
     """Load a binomial tree path as a list of lists."""
-    with open(path_res / "p067_numbers.txt", "r") as f:
-        lines = f.read().split("\n")
-        paths = [[int(n) for n in line.split(" ")] for line in lines]
+    url = "https://projecteuler.net/project/resources/p067_triangle.txt"
+    content = get(url).content.decode("utf-8").rstrip("\n")
+    lines = content.split("\n")
+    paths = [[int(n) for n in line.split(" ")] for line in lines]
     return paths
 
 

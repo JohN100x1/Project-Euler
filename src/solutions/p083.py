@@ -1,14 +1,6 @@
 import numpy as np
 import numpy.typing as npt
 
-from config import path_res
-
-
-def load_matrix() -> npt.NDArray[np.int32]:
-    """Load the matrix of integers from /res/p081_matrix.txt"""
-    path_txt = path_res / "p081_matrix.txt"
-    return np.loadtxt(path_txt, dtype=np.int32, delimiter=",")
-
 
 def get_adj(
     m: int, n: int, visited: dict[tuple[int, int], int], w: tuple[int, int]

@@ -1,12 +1,25 @@
+from re import findall, sub
+
 import numpy as np
 import numpy.typing as npt
-
-from config import path_res
+from requests import get
 
 
 def load_grid() -> npt.NDArray[np.int64]:
-    """Load grid of integers from /res/p011_grid.txt"""
-    return np.loadtxt(path_res / "p011_grid.txt", dtype=np.int64)
+    """Load grid of integers from https://projecteuler.net/problem=11."""
+    url = "https://projecteuler.net/problem=11"
+    content = get(url).content.decode("utf-8")
+    pattern = (
+        r'\n([\d ]+|[\d ]*<span class="red"><b>\d+</b></span>[\d ]*)<br />'
+    )
+    results = []
+    for row in findall(pattern, content):
+        found = findall(r'<span class="red"><b>(\d+)</b></span>', row)
+        if found:
+            row = sub(r'<span class="red"><b>\d+</b></span>', found[0], row)
+        results.append(row)
+    grid = "\n".join(results)
+    return np.fromstring(grid, sep=" ", dtype=np.int64).reshape(20, 20)
 
 
 def get_largest_prod(grid: npt.NDArray[np.int64]) -> int:

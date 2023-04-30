@@ -1,11 +1,13 @@
-from config import path_res
+from requests import get
+
 from utils.exceptions import SolutionNotFoundError
 
 
 def load_cipher() -> list[int]:
-    """Load a list of integers from /res/p059_cipher.txt."""
-    with open(path_res / "p059_cipher.txt") as f:
-        return [int(c) for c in f.read().split(",")]
+    """Load a list of integers from p059_cipher.txt."""
+    url = "https://projecteuler.net/project/resources/p059_cipher.txt"
+    content = get(url).content.decode("utf-8")
+    return [int(num) for num in content.split(",")]
 
 
 def decrypt_cipher(cipher: list[int], key: str) -> str:

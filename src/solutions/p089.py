@@ -1,10 +1,13 @@
-from config import NUMERAL_CHR, NUMERAL_VAL, path_res
+from requests import get
+
+from config import NUMERAL_CHR, NUMERAL_VAL
 
 
 def load_numerals() -> list[str]:
-    """Load a list of roman numerals from /res/p089_roman.txt"""
-    with open(path_res / "p089_roman.txt") as f:
-        return f.read().split("\n")
+    """Load a list of roman numerals from p089_roman.txt"""
+    url = "https://projecteuler.net/project/resources/p089_roman.txt"
+    content = get(url).content.decode("utf-8").rstrip("\n")
+    return content.split("\n")
 
 
 def get_roman_numeral(n: int) -> str:

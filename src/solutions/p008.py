@@ -1,10 +1,13 @@
-from config import path_res
+from re import findall
+
+from requests import get
 
 
 def load_str_digits() -> str:
-    """Load a string of digits 0-9 from /res/p008_digits.txt."""
-    with open(path_res / "p008_digits.txt") as f:
-        return f.read().replace("\n", "")
+    """Load a string of digits 0-9 from https://projecteuler.net/problem=8."""
+    url = "https://projecteuler.net/problem=8"
+    content = get(url).content.decode("utf-8")
+    return "".join(findall(r"\n(\d+)<br />", content))
 
 
 def get_largest_product(d: int, str_digits: str) -> int:

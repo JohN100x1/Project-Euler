@@ -1,10 +1,11 @@
-from config import path_res
+from requests import get
 
 
 def load_names() -> list[str]:
-    """Load a list of names from /res/p022_names.txt."""
-    with open(path_res / "p022_names.txt") as f:
-        return f.read().replace('"', "").split(",")
+    """Load a list of names from p022_names.txt."""
+    url = "https://projecteuler.net/project/resources/p022_names.txt"
+    content = get(url).content.decode("utf-8")
+    return content.replace('"', "").split(",")
 
 
 def name_score(pos: int, name: str) -> int:

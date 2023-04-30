@@ -1,16 +1,16 @@
-from config import path_res
+from requests import get
 
 
 def load_words() -> list[str]:
-    """Loads a list of strings from /res/p042_words.txt."""
-    with open(path_res / "p042_words.txt") as f:
-        return f.read().replace('"', "").split(",")
+    """Load a list of words from p042_words.txt."""
+    url = "https://projecteuler.net/project/resources/p042_words.txt"
+    content = get(url).content.decode("utf-8")
+    return content.replace('"', "").split(",")
 
 
 def count_triangle_words(words: list[str]) -> int:
     """
-    Get the number of words which have a converted sum
-    equal to a triangle number.
+    Get number of words which have a converted sum equal to a triangle number.
     """
     count = 0
     for word in words:

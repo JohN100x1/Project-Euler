@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from config import path_res
+from requests import get
 
 VALUES = {str(i): i for i in range(2, 10)}
 VALUES.update({"T": 10, "J": 11, "Q": 12, "K": 13, "A": 14})
@@ -8,9 +8,11 @@ ROYALS = [10, 11, 12, 13, 14]
 
 
 def load_hands() -> list[str]:
-    """Loads a list of strings from /res/p054_poker.txt."""
-    with open(path_res / "p054_poker.txt") as f:
-        return f.read().split("\n")
+    """Loads a list of strings from p054_poker.txt."""
+    url = "https://projecteuler.net/project/resources/p054_poker.txt"
+    content = get(url).content.decode("utf-8").rstrip("\n")
+    hands = content.split("\n")
+    return hands
 
 
 def is_flush(hand: str) -> bool:

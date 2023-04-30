@@ -1,6 +1,7 @@
 from collections import defaultdict
 
-from config import path_res
+from requests import get
+
 from utils.exceptions import SolutionNotFoundError
 
 
@@ -9,9 +10,10 @@ class KeyLog(tuple):
 
 
 def load_logins() -> list[KeyLog]:
-    """Load a list of integer tuples from /res/p079_keylog.txt"""
-    with open(path_res / "p079_keylog.txt", "r") as f:
-        return [KeyLog(int(d) for d in n) for n in f.read().split("\n")]
+    """Load a list of integer tuples from p079_keylog.txt"""
+    url = "https://projecteuler.net/project/resources/p079_keylog.txt"
+    content = get(url).content.decode("utf-8").rstrip("\n")
+    return [KeyLog(int(d) for d in n) for n in content.split("\n")]
 
 
 class PasscodeSearch:

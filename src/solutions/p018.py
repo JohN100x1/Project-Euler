@@ -1,11 +1,17 @@
-from config import path_res
+from re import findall
+
+from requests import get
 
 
 def load_paths() -> list[list[int]]:
     """Load a binomial tree path as a list of lists."""
-    with open(path_res / "p018_numbers.txt", "r") as f:
-        lines = f.read().split("\n")
-        paths = [[int(n) for n in line.split(" ")] for line in lines]
+    url = "https://projecteuler.net/problem=18"
+    content = get(url).content.decode("utf-8")
+    first_num = r'<p class="monospace center">(\d+)<br />'
+    pattern = r"\n([\d ]+)(?:<br />|</p>)"
+    lines = findall(first_num, content)
+    lines.extend(findall(pattern, content))
+    paths = [[int(n) for n in line.split(" ")] for line in lines]
     return paths
 
 
