@@ -9,7 +9,7 @@ def load_nums() -> npt.NDArray[np.float64]:
     """Load array of large numbers from https://projecteuler.net/problem=13."""
     url = "https://projecteuler.net/problem=13"
     content = get(url).content.decode("utf-8")
-    nums = "\n".join(findall(r"\n(\d+)<br />", content))
+    nums = "\n".join(findall(r"\n(\d+)<br>", content))
     return np.fromstring(nums, sep="\n", dtype=np.float64)
 
 

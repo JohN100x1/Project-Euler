@@ -7,7 +7,7 @@ def load_str_digits() -> str:
     """Load a string of digits 0-9 from https://projecteuler.net/problem=8."""
     url = "https://projecteuler.net/problem=8"
     content = get(url).content.decode("utf-8")
-    return "".join(findall(r"\n(\d+)<br />", content))
+    return "".join(findall(r"\n(\d+)<br>", content))
 
 
 def get_largest_product(d: int, str_digits: str) -> int:

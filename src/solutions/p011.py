@@ -9,9 +9,7 @@ def load_grid() -> npt.NDArray[np.int64]:
     """Load grid of integers from https://projecteuler.net/problem=11."""
     url = "https://projecteuler.net/problem=11"
     content = get(url).content.decode("utf-8")
-    pattern = (
-        r'\n([\d ]+|[\d ]*<span class="red"><b>\d+</b></span>[\d ]*)<br />'
-    )
+    pattern = r'\n([\d ]+|[\d ]*<span class="red"><b>\d+</b></span>[\d ]*)<br>'
     results = []
     for row in findall(pattern, content):
         found = findall(r'<span class="red"><b>(\d+)</b></span>', row)
