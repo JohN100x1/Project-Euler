@@ -1,11 +1,6 @@
 from config import DIGIT_FACTORIALS
 
 
-def sum_digit_factorial(n: int) -> int:
-    """Get the sum of the factorial of the digits of n."""
-    return sum(DIGIT_FACTORIALS[d] for d in str(n))
-
-
 def count_chains_with_length(length: int, max_n: int) -> int:
     """Get the number of digit factorial sum chains with 60 non-repeating."""
     chain: dict[int, int] = {}
@@ -18,7 +13,7 @@ def count_chains_with_length(length: int, max_n: int) -> int:
         while n not in chain and n not in sub_chain:
             sub_chain[n] = sub_count
             sub_count += 1
-            n = sum_digit_factorial(n)
+            n = sum(DIGIT_FACTORIALS[d] for d in str(n))
         # If the latest value is in the chain, add all values from sub-chain
         if n in chain:
             for i, m in enumerate(reversed(sub_chain), 1):

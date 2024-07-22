@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "project euler"
-version = "0.89.0"
+version = "0.92.0"
 description = "Solutions to https://projecteuler.net/"
 authors = ["JohN100x1 <JohN100x1@hotmail.co.uk>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-numpy = "^1.23.1"
-requests = "^2.29.0"
+numpy = "^2"
+requests = "^2"
 
 [tool.poetry.dev-dependencies]
-black = "^23.3.0"
-isort = "^5.10.1"
-pytest = "^7.3.0"
+black = "^24"
+isort = "^5"
+pytest = "^8"
 mypy = "^1"
 
 [build-system]

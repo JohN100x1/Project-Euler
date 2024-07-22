@@ -1,3 +1,5 @@
+from itertools import product
+
 from requests import get
 
 from utils.exceptions import SolutionNotFoundError
@@ -18,11 +20,9 @@ def decrypt_cipher(cipher: list[int], key: str) -> str:
 
 def sum_decrypted_ascii_values(cipher: list[int]) -> int:
     """Get the sum of the ASCII values of the decryption key."""
-    for x in range(97, 123):
-        for y in range(97, 123):
-            for z in range(97, 123):
-                key = chr(x) + chr(y) + chr(z)
-                message = decrypt_cipher(cipher, key)
-                if " the " in message:
-                    return sum(ord(m) for m in message)
+    for key_tuple in product([chr(i) for i in range(97, 123)], repeat=3):
+        key = "".join(key_tuple)
+        message = decrypt_cipher(cipher, key)
+        if " the " in message:
+            return sum(ord(m) for m in message)
     raise SolutionNotFoundError("Cannot decrypt message.")

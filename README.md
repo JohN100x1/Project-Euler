@@ -4,4 +4,4 @@
 [![Python](https://img.shields.io/badge/python-3.11%2B-brightgreen)](https://www.python.org/)
 [![Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This repository contains my solutions to problems on [Project Euler](https://projecteuler.net/).
+This repository contains (mostly) my solutions to problems on [Project Euler](https://projecteuler.net/).
