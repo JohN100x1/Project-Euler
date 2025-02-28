@@ -1,7 +1,7 @@
 from utils.primes import get_primes
 
 
-def sum_truncatable_primes(max_count=11) -> int:
+def sum_truncatable_primes(max_count: int = 11) -> int:
     """Get the sum of all primes that are both left and right truncatable."""
     # Exclude first 4 primes from sum
     prime_sum = 0

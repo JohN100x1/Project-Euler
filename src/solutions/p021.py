@@ -1,7 +1,7 @@
 from utils.div import get_proper_factor_sums
 
 
-def sum_amicable(n: int, limit=25000) -> int:
+def sum_amicable(n: int, limit: int = 25000) -> int:
     """Get the sum of amicable numbers less than n."""
     checked = set()
     amicable_sum = 0

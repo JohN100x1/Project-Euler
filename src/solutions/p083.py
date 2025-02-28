@@ -3,7 +3,10 @@ import numpy.typing as npt
 
 
 def get_adj(
-    m: int, n: int, visited: dict[tuple[int, int], int], w: tuple[int, int]
+    m: int,
+    n: int,
+    visited: dict[tuple[int, int], np.int32],
+    w: tuple[int, int],
 ) -> set[tuple[int, int]]:
     """Get a set of adjacent nodes to visit."""
     adj_nodes = set()

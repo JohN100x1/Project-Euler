@@ -26,8 +26,8 @@ class PolygonalSearch:
     Polygonal: triangle, square, pentagonal, hexagonal, heptagonal, octagonal.
     """
 
-    def __init__(self):
-        self.cyclic_polys = []
+    def __init__(self) -> None:
+        self.cyclic_polys: list[list[int]] = []
         self.poly_funcs = [
             lambda n: n * (n + 1) // 2,
             lambda n: n**2,
@@ -36,9 +36,11 @@ class PolygonalSearch:
             lambda n: n * (5 * n - 3) // 2,
             lambda n: n * (3 * n - 2),
         ]
-        self.poly_nums = []
+        self.poly_nums: list[dict[int, set[int]]] = []
 
-    def dfs_cyclic_polygonal_nums(self, chain: list[int], poly: list[int]):
+    def dfs_cyclic_polygonal_nums(
+        self, chain: list[int], poly: list[int]
+    ) -> None:
         """Depth first search for 2-digit-cyclic 4-digit polygonal numbers."""
         last_idx = poly[-1]
         depth = len(chain) - 1

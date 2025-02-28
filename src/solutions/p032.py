@@ -1,4 +1,4 @@
-def sum_pandigital_products_one_to_nine():
+def sum_pandigital_products_one_to_nine() -> int:
     """
     Get the sum of all 1-9 pandigital multiplicand * multiplier = product
 
@@ -6,12 +6,15 @@ def sum_pandigital_products_one_to_nine():
     1 digit * 4 digit or 2 digit * 3 digit, with a 4 digit product
     """
 
+    def product14(u: int, v: int, x: int, y: int, z: int) -> int:
+        return u * (1000 * v + 100 * x + 10 * y + z)
+
+    def product23(u: int, v: int, x: int, y: int, z: int) -> int:
+        return (10 * u + v) * (100 * x + 10 * y + z)
+
     digits = {1, 2, 3, 4, 5, 6, 7, 8, 9}
     products = set()
-    product_functions = [
-        lambda u, v, x, y, z: u * (1000 * v + 100 * x + 10 * y + z),
-        lambda u, v, x, y, z: (10 * u + v) * (100 * x + 10 * y + z),
-    ]
+    product_functions = [product14, product23]
     for a in digits:
         for b in digits - {a}:
             for c in digits - {a, b}:

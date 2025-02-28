@@ -17,7 +17,7 @@ def get_circ_prime(p: int, prime_set: set[int]) -> set[int]:
     return cyc_nums
 
 
-def count_circ_primes():
+def count_circ_primes() -> int:
     """Get the number of circular primes in the list of PRIMES."""
     circ_primes = {2, 3, 5, 7}
     nope_digits = {0, 2, 4, 5, 6, 8}

@@ -1,7 +1,7 @@
 from utils.exceptions import SolutionNotFoundError
 
 
-def get_area_nearest_solution(start_count: int, limit=1000) -> int:
+def get_area_nearest_solution(start_count: int, limit: int = 1000) -> int:
     """
     Get the area of the rectangle such that the number of sub-rectangles is
     closest to 2 million.

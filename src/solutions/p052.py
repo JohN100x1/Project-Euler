@@ -1,7 +1,7 @@
 from utils.exceptions import SolutionNotFoundError
 
 
-def get_permuted_multiples(n: int, max_d=10) -> int:
+def get_permuted_multiples(n: int, max_d: int = 10) -> int:
     """
     Get the smallest number x such that for 1, 2, ..., n,
     n * x is a permutation of the digits of x.

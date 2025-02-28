@@ -9,7 +9,7 @@ def get_proper_factor_sums(n: int) -> list[int]:
     return proper_factor_sums
 
 
-def get_non_sum_two_abundant(limit=28123):
+def get_non_sum_two_abundant(limit: int = 28123) -> int:
     """
     Get the sum of all positive integers which cannot be written as the
     sum of two abundant numbers. Any integer bigger than 28123 can be written

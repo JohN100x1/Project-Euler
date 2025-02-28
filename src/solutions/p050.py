@@ -17,7 +17,7 @@ def get_longest_prime_sum(n: int) -> int:
         p_sum = p_sums1[L + j] - p_sums2[j]
         while p_sum < n:
             if p_sum in prime_set:
-                return p_sum
+                return int(p_sum)
             j += 1
             p_sum = p_sums1[L + j] - p_sums2[j]
     raise SolutionNotFoundError("Failed to find solution for p050.")

@@ -28,7 +28,7 @@ def get_largest_pandigital_prime() -> int:
     for k in range(7, 0, -1):
         dlist = list(range(k, 0, -1))
         for perm in perm_last(dlist, k):
-            p = sum(d * 10**i for i, d in enumerate(perm[::-1]))
+            p: int = sum(d * 10**i for i, d in enumerate(reversed(perm)))
             if miller_rabin_is_prime(p):
                 return p
     raise SolutionNotFoundError("Largest pandigital prime not found.")

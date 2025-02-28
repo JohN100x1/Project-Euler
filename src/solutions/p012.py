@@ -19,7 +19,7 @@ def get_num_divisors(n: int, primes: list[int]) -> int:
     return num_div
 
 
-def get_high_divisible_tri_num(m: int, p_limit=10**6) -> int:
+def get_high_divisible_tri_num(m: int, p_limit: int = 10**6) -> int:
     """Get the first triangle number with m divisors."""
     n = 0
     num_div = 0

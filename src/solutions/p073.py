@@ -20,7 +20,7 @@ class SubLinearAlgorithm:
         self.r_small = [0 for _ in range(self.m + 1)]
         self.r_large = [0 for _ in range(self.k)]
 
-    def r_procedure(self, n: int):
+    def r_procedure(self, n: int) -> None:
         """Perform the R(n) procedure."""
         switch = int((n / 2) ** 0.5)
         count = total_frac(n) - total_frac(n // 2)

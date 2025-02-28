@@ -1,4 +1,4 @@
-def get_primes(n: int) -> list:
+def get_primes(n: int) -> list[int]:
     """Returns a list of primes less than n."""
     sieve = [True] * n
     for i in range(3, int(n**0.5) + 1, 2):

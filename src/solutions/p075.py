@@ -11,7 +11,9 @@ def count_unique_pytriple_with_perimeter(max_p: int) -> int:
     return sum(solutions.values())
 
 
-def get_triples(max_p: int, a=3, b=4, c=5) -> list[tuple[int, int, int]]:
+def get_triples(
+    max_p: int, a: int = 3, b: int = 4, c: int = 5
+) -> list[tuple[int, int, int]]:
     """
     Get a list of 3-tuples which are Pythagorean triples with a max
     perimeter of max_p.

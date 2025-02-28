@@ -1,7 +1,7 @@
 from math import gcd
 
 
-def get_denominator_digit_cancel_frac_product():
+def get_denominator_digit_cancel_frac_product() -> int:
     """
     Gets the denominator of the product of all two digit cancelling fractions
     less than 1.

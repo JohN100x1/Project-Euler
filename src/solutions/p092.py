@@ -3,7 +3,7 @@ from itertools import combinations_with_replacement
 from math import factorial, prod
 
 
-def count_square_digit_chain():
+def count_square_digit_chain() -> int:
     """Counts the number of sum of squared digits chains that end in 89."""
     total = 0
 

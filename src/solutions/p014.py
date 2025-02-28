@@ -1,4 +1,4 @@
-def get_chain_len(n: int, chain_len: dict) -> int:
+def get_chain_len(n: int, chain_len: dict[int, int]) -> int:
     """Get chain length of n recursively."""
     if n not in chain_len:
         if n % 2 == 0:

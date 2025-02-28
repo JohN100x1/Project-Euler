@@ -5,7 +5,7 @@ from requests import get
 from utils.exceptions import SolutionNotFoundError
 
 
-class KeyLog(tuple):
+class KeyLog(tuple[int, ...]):
     pass
 
 
@@ -19,11 +19,11 @@ def load_logins() -> list[KeyLog]:
 class PasscodeSearch:
     """Search for passcode using DFS."""
 
-    def __init__(self):
-        self.passcodes = []
+    def __init__(self) -> None:
+        self.passcodes: list[int] = []
         self.right_adj: dict[int, set[int]] = {}
 
-    def dfs_traverse(self, passcode: int, d: int):
+    def dfs_traverse(self, passcode: int, d: int) -> None:
         """Search for Passcode using DFS."""
         if d not in self.right_adj:
             self.passcodes.append(passcode)
@@ -47,7 +47,6 @@ class PasscodeSearch:
 
     def generate_short_passcode(self, logins: list[KeyLog]) -> int:
         """Return the shortest passcode from a given list of keyed logins."""
-        self.passcodes = []
         self.right_adj = self.generate_right_adj(logins)
         # Get the first digit
         has_next_digits = set(d for d in self.right_adj.keys())

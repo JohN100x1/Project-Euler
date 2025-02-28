@@ -35,4 +35,4 @@ def get_two_way_min_path_sum(matrix: npt.NDArray[np.int32]) -> int:
                 sum1 = diagonal[j] + path_sums2[j]
                 sum2 = diagonal[j] + path_sums2[j + 1]
                 path_sums1.append(min(sum1, sum2))
-    return path_sums1[0]
+    return int(path_sums1[0])

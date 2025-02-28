@@ -15,8 +15,8 @@ class FiveGon:
     }
     IN_NODES = {1, 2, 4, 6, 8}
 
-    def __init__(self):
-        self.list_five_gon = []
+    def __init__(self) -> None:
+        self.list_five_gon: list[list[int]] = []
         self.five_gon = [0 for _ in range(10)]
 
     @staticmethod
@@ -51,7 +51,7 @@ class FiveGon:
             return True
         return False
 
-    def solve_five_gon(self, nums: set[int]):
+    def solve_five_gon(self, nums: set[int]) -> None:
         """Recursively fill out possible values on the 5-gon."""
         for i in range(10):
             if self.five_gon[i] == 0:
