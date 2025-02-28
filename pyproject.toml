@@ -15,9 +15,6 @@ isort = "^6"
 pytest = "^8"
 mypy = "^1"
 
-[tool.poetry.group.dev.dependencies]
-types-requests = "^2.32.0.20240712"
-
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
